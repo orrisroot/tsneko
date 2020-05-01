@@ -3,3 +3,7 @@ node_modules/
 
 # output dir
 build
+
+# to ignore build files
+public/index.js
+public/index.js.map

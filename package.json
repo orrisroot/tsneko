@@ -14,7 +14,7 @@
   "license": "ISC",
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test && npm run public",
+      "pre-commit": "npm run test",
       "pre-push": "npm run test"
     }
   },
