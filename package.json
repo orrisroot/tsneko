@@ -6,15 +6,23 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
+    "public": "npm run build && cp build/* public",
     "dev": "nodemon"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run public",
+      "pre-push": "npm run public"
+    }
+  },
   "devDependencies": {
     "@types/node": "^13.13.4",
     "concurrently": "^5.2.0",
     "http-server": "^0.12.3",
+    "husky": "^4.2.5",
     "nodemon": "^2.0.3",
     "ts-node": "^8.9.1",
     "typescript": "^3.8.3"

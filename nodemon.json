@@ -2,5 +2,5 @@
   "watch": ["src", "public/index.html"],
   "ext": ".ts,.js",
   "ignore": [],
-  "exec": "concurrently \"npm run build\" \"cp build/* public\" \"http-server public\""
+  "exec": "concurrently \"npm run public\" \"http-server public\""
 }
