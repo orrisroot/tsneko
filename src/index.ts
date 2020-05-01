@@ -1,5 +1,3 @@
-console.log('kappa');
-
 interface NekoConfig {
   speed: number;
 }
