@@ -4,7 +4,7 @@
   "description": "Webneko written in typescript",
   "main": "build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "build": "webpack",
     "public": "npm run build && cp build/* public",
     "dev": "nodemon"
@@ -14,16 +14,19 @@
   "license": "ISC",
   "husky": {
     "hooks": {
-      "pre-commit": "npm run public",
-      "pre-push": "npm run public"
+      "pre-commit": "npm run test && npm run public",
+      "pre-push": "npm run test"
     }
   },
   "devDependencies": {
+    "@types/jest": "^25.2.1",
     "@types/node": "^13.13.4",
     "concurrently": "^5.2.0",
     "http-server": "^0.12.3",
     "husky": "^4.2.5",
+    "jest": "^25.5.3",
     "nodemon": "^2.0.3",
+    "ts-jest": "^25.4.0",
     "ts-loader": "^7.0.2",
     "ts-node": "^8.9.1",
     "typescript": "^3.8.3",

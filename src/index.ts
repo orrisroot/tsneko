@@ -1,30 +1,47 @@
+import { NekoState, StateStill } from './state';
 interface NekoConfig {
   speed: number;
 }
 
-// used to update the environment of neko
-// use the default one for the browser
-interface NekoEnvironment {
-  cursorX: number;
-  cursorY: number;
-  updateEnvironment: () => {};
-}
+const defaultConfig: NekoConfig = {
+  speed: 3,
+};
 
-// holds the current state of neko to draw it
-interface NekoState {
-  x: number;
-  y: number;
-
-  img: string;
-  next: (env: NekoEnvironment) => NekoState;
+class browserEnvironment implements NekoEnvironment {
+  cursorX: 0;
+  cursorY: 0;
+  updateEnvironment() {
+    this.cursorX += 1;
+    this.cursorY += 1;
+  }
 }
 
 class Neko {
+  x: number;
+  y: number;
+
   config: NekoConfig;
   state: NekoState;
+  env: NekoEnvironment;
 
-  constructor(config: NekoConfig, env: NekoEnvironment) {}
+  constructor(config: NekoConfig, env: NekoEnvironment) {
+    this.config = config;
+    this.env = env;
+    this.state = new StateStill();
+
+    this.x = 0;
+    this.y = 0;
+  }
 
   // updates the state
-  next = () => {};
+  next = () => {
+    this.env.updateEnvironment();
+    this.state = this.state.next(this.x, this.y, this.env);
+  };
 }
+
+export { Neko };
+
+export let defaultNeko = () => {
+  return new Neko(defaultConfig, new browserEnvironment());
+};
