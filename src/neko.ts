@@ -2,12 +2,28 @@ export interface NekoConfig {
   speed: number;
   radius: number;
   ticksBeforeItch: number;
+  ticksBeforeScratch: number;
+
+  //generates scratch direction at each call
+  scratchDirection: () => 's' | 'w' | 'e' | 'n';
 }
 
 export const defaultConfig: NekoConfig = {
   speed: 2,
   radius: 1,
   ticksBeforeItch: 5,
+  ticksBeforeScratch: 5,
+  scratchDirection: () => {
+    const directions = {
+      1: 's',
+      2: 'w',
+      3: 'e',
+      4: 'n',
+    };
+    const rnd = Math.floor(Math.random() * (5 - 1)) + 1;
+    // @ts-ignore
+    return directions[rnd];
+  },
 };
 
 export class Neko {
@@ -19,7 +35,9 @@ export class Neko {
     direction?: string;
     ticksBeforeItch: number;
     framesItch?: number;
-  } = { name: 'still', x: 0, y: 0, ticksBeforeItch: 5 };
+    ticksBeforeScratch: number;
+    framesScratch?: number;
+  } = { name: 'still', x: 0, y: 0, ticksBeforeItch: 5, ticksBeforeScratch: 5 };
 
   get img(): string {
     return `${this.state.direction ? this.state.direction : ''}${
@@ -32,6 +50,7 @@ export class Neko {
   constructor(config: NekoConfig) {
     this.config = { ...config };
     this.state.ticksBeforeItch = config.ticksBeforeItch;
+    this.state.ticksBeforeScratch = config.ticksBeforeScratch;
   }
 
   // updates the state
@@ -44,8 +63,34 @@ export class Neko {
       this.updateAlert(x, y);
     } else if (this.state.name == 'run') {
       this.updateRun(x, y);
+    } else if (this.state.name == 'scratch') {
+      this.updateScratch(x, y);
     }
   };
+
+  updateScratch(x: number, y: number) {
+    if (!this.cursorClose(x, y)) {
+      this.state.name = 'alert';
+      this.state.tick = null;
+      this.state.framesScratch = null;
+      this.state.ticksBeforeScratch = this.config.ticksBeforeScratch;
+      this.state.direction = null;
+      return;
+    }
+
+    // done scratching
+    if (this.state.framesScratch - 1 == 0) {
+      this.state.name = 'still';
+      this.state.tick = null;
+      this.state.framesScratch = null;
+      this.state.ticksBeforeScratch = this.config.ticksBeforeScratch;
+      this.state.direction = null;
+      return;
+    }
+
+    this.state.framesScratch -= 1;
+    this.state.tick = this.state.tick === 1 ? 2 : 1;
+  }
 
   updateStill(x: number, y: number) {
     if (!this.cursorClose(x, y)) {
@@ -61,7 +106,17 @@ export class Neko {
       return;
     }
 
+    // todo make random
+    if (this.state.ticksBeforeScratch === 0) {
+      this.state.name = 'scratch';
+      this.state.framesScratch = 4;
+      this.state.tick = 1;
+      this.state.direction = this.config.scratchDirection();
+      return;
+    }
+
     this.state.ticksBeforeItch -= 1;
+    this.state.ticksBeforeScratch -= 1;
   }
   updateItch(x: number, y: number) {
     if (!this.cursorClose(x, y)) {

@@ -34,9 +34,10 @@ it.each`
   ${{ x: 0, y: 10 }}    | ${'srun'}
   ${{ x: -10, y: 10 }}  | ${'swrun'}
   ${{ x: -10, y: 0 }}   | ${'wrun'}
-`(`state run target:$xy direction:$dir`, ({ xy, dir }) => {
+`('state run target:$xy direction:$dir', ({ xy, dir }) => {
   const n = wn.defaultNeko();
-  n.state.ticksBeforeItch = 999;
+  n.state.ticksBeforeItch = -1;
+  n.state.ticksBeforeScratch = -1;
 
   n.state.x = 0;
   n.state.y = 0;
@@ -85,6 +86,45 @@ test('state itch', () => {
   expect(n.state.name).toBe('itch');
   n.update(0, 0);
   expect(n.state.name).toBe('itch');
+
+  n.update(0, 0);
+  expect(n.state.name).toBe('still');
+});
+
+it.each`
+  dir    | img
+  ${'s'} | ${'sscratch'}
+  ${'w'} | ${'wscratch'}
+  ${'e'} | ${'escratch'}
+  ${'n'} | ${'nscratch'}
+`('state scrath $dir', ({ dir, img }) => {
+  const n = wn.defaultNeko();
+  n.state.ticksBeforeItch = -1;
+
+  // change scratch config
+  n.config.scratchDirection = () => {
+    return dir;
+  };
+
+  n.update(0, 0);
+  expect(n.state.name).toBe('still');
+  n.update(0, 0);
+  expect(n.state.name).toBe('still');
+  n.update(0, 0);
+  expect(n.state.name).toBe('still');
+  n.update(0, 0);
+  expect(n.state.name).toBe('still');
+  n.update(0, 0);
+  expect(n.state.name).toBe('still');
+
+  n.update(0, 0);
+  expect(n.img).toBe(img + '1');
+  n.update(0, 0);
+  expect(n.img).toBe(img + '2');
+  n.update(0, 0);
+  expect(n.img).toBe(img + '1');
+  n.update(0, 0);
+  expect(n.img).toBe(img + '2');
 
   n.update(0, 0);
   expect(n.state.name).toBe('still');
