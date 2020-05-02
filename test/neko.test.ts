@@ -24,6 +24,14 @@ test('state still', () => {
   expect(n.state.y).toBe(0);
 });
 
+test('state alert', () => {
+  const n = wn.defaultNeko();
+  n.update(10, 10);
+  expect(n.img).toBe('alert');
+  n.update(0, 0);
+  expect(n.img).toBe('still');
+});
+
 it.each`
   xy                    | dir
   ${{ x: -10, y: -10 }} | ${'nwrun'}
@@ -92,6 +100,17 @@ test('state itch', () => {
 
   n.update(0, 0);
   expect(n.state.name).toBe('still');
+
+  //interrupt itch
+  n.update(0, 0);
+  n.update(0, 0);
+  n.update(0, 0);
+  n.update(0, 0);
+  n.update(0, 0);
+  expect(n.state.name).toBe('still');
+  n.update(0, 0);
+  expect(n.state.name).toBe('itch');
+  n.update(10, 10);
 });
 
 it.each`
@@ -110,6 +129,7 @@ it.each`
     return dir;
   };
 
+  // scatch after ticks
   n.update(0, 0);
   expect(n.state.name).toBe('still');
   n.update(0, 0);
@@ -130,8 +150,18 @@ it.each`
   n.update(0, 0);
   expect(n.img).toBe(img + '2');
 
+  // interrupt scratch
+  n.update(0, 0);
+  n.update(0, 0);
+  n.update(0, 0);
+  n.update(0, 0);
+  n.update(0, 0);
   n.update(0, 0);
   expect(n.state.name).toBe('still');
+  n.update(0, 0);
+  expect(n.img).toBe(img + '1');
+  n.update(10, 10);
+  expect(n.img).toBe('alert');
 });
 
 test('state yawn and sleep', () => {
@@ -154,6 +184,32 @@ test('state yawn and sleep', () => {
     expect(n.state.name).toBe('sleep');
   }
 
+  n.update(0, 0);
+  expect(n.state.name).toBe('alert');
+
+  // interrupt yawn
+  for (let i = 0; i < 20; i++) {
+    n.update(9999, 9999);
+  }
+  n.update(n.state.x, n.state.y);
+  n.update(n.state.x, n.state.y);
+  expect(n.state.name).toBe('yawn');
+  n.update(9999, 9999);
+  expect(n.state.name).toBe('alert');
+
+  // interrupt sleep
+  n.state.x = 0;
+  n.state.y = 0;
+  for (let i = 0; i < 20; i++) {
+    n.update(9999, 9999);
+  }
+  n.update(n.state.x, n.state.y);
+  n.update(n.state.x, n.state.y);
+  expect(n.state.name).toBe('yawn');
+  n.update(n.state.x, n.state.y);
+  n.update(n.state.x, n.state.y);
+  // sleeping here
+  expect(n.state.name).toBe('sleep');
   n.update(0, 0);
   expect(n.state.name).toBe('alert');
 });
