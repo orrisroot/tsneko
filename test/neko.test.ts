@@ -39,9 +39,25 @@ it.each`
 
   n.state.x = 0;
   n.state.y = 0;
+
+  // still -> alert
   n.update(xy.x, xy.y);
   expect(n.state.name).toBe('alert');
+  expect(n.state.x).toBe(0);
+  expect(n.state.y).toBe(0);
 
+  // alert -> run1
   n.update(xy.x, xy.y);
-  expect(n.state.name).toBe(dir);
+  expect(n.img).toBe(dir + '1');
+
+  // run1 -> run2
+  n.update(xy.x, xy.y);
+  expect(n.img).toBe(dir + '2');
+
+  for (let i = 0; i < 10; i++) {
+    n.update(xy.x, xy.y);
+  }
+  expect(n.state.x).toBeCloseTo(xy.x, 0);
+  expect(n.state.y).toBeCloseTo(xy.y, 0);
+  expect(n.img).toBe('still');
 });

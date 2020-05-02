@@ -1,9 +1,11 @@
 export interface NekoConfig {
   speed: number;
+  radius: number;
 }
 
 export const defaultConfig: NekoConfig = {
-  speed: 1,
+  speed: 2,
+  radius: 1,
 };
 
 export class Neko {
@@ -12,10 +14,13 @@ export class Neko {
     x: number;
     y: number;
     tick?: number;
+    direction?: string;
   } = { name: 'still', x: 0, y: 0 };
 
   get img(): string {
-    return `${name}${this.state.tick ? this.state.tick : ''}`;
+    return `${this.state.direction ? this.state.direction : ''}${
+      this.state.name
+    }${this.state.tick ? this.state.tick : ''}`;
   }
 
   config: NekoConfig;
@@ -35,49 +40,67 @@ export class Neko {
       if (this.cursorClose(x, y)) {
         this.state.name = 'still';
         this.state.tick = null;
+        this.state.direction = null;
         return;
       }
 
-      // choose run direction
-      // choose tick
-      this.state.name = this.chooseRunDirection(x, y);
-      if (this.state.tick) {
-        this.state.tick = ((this.state.tick + 1) % 2) + 1;
-      } else {
-        this.state.tick = 1;
+      this.state.tick = 1;
+      this.state.name = 'run';
+      this.state.direction = this.chooseRunDirection(x, y);
+      this.makeStep(x, y);
+    } else if (this.state.name == 'run') {
+      if (this.cursorClose(x, y)) {
+        this.state.name = 'still';
+        this.state.tick = null;
+        this.state.direction = null;
+        return;
       }
+
+      this.state.direction = this.chooseRunDirection(x, y);
+      this.state.tick = this.state.tick === 1 ? 2 : 1;
+      this.makeStep(x, y);
     }
   };
 
+  private makeStep(x: number, y: number) {
+    // x=0 y=-10
+    const dx = x - this.state.x;
+    const dy = y - this.state.y;
+    let phi = Math.atan2(dy, dx);
+
+    this.state.x += this.config.speed * Math.cos(phi);
+    this.state.y += this.config.speed * Math.sin(phi);
+  }
+
   private cursorClose(x: number, y: number) {
     // TODO remove magic number
-    return Math.hypot(this.state.x - x, this.state.y - y) < 10;
+    return Math.hypot(this.state.x - x, this.state.y - y) < this.config.radius;
   }
 
   private chooseRunDirection(x: number, y: number): string {
-    // 0 -10
     const dx = x - this.state.x;
     const dy = y - this.state.y;
     const diag = Math.hypot(dx, dy);
     let phi = calcAngleDegrees(dx, dy);
 
+    // todo use math.pi
     switch (true) {
       case -22.5 < phi && phi <= 22.5:
-        return 'erun';
+        return 'e';
       case -67.5 < phi && phi <= -22.5:
-        return 'nerun';
+        return 'ne';
       case -112.5 < phi && phi <= -67.5:
-        return 'nrun';
+        return 'n';
       case -157.5 < phi && phi <= -112.5:
-        return 'nwrun';
+        return 'nw';
       case (-180 <= phi && phi <= -157.5) || (157.5 < phi && phi <= 180):
-        return 'wrun';
+        return 'w';
       case 112.5 < phi && phi <= 157.5:
-        return 'swrun';
+        return 'sw';
       case 67.5 < phi && phi <= 112.5:
-        return 'srun';
+        return 's';
       case 22.5 < phi && phi <= 67.5:
-        return 'serun';
+        return 'se';
 
       default:
         throw Error(`error in finding path direction ${diag} ${phi}`);
