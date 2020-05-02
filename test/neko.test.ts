@@ -1,4 +1,5 @@
 import * as wn from '../src/index';
+import * as tenv from './testEnvironment';
 
 test('creates default neko', () => {
   const n = wn.defaultNeko();
@@ -8,21 +9,22 @@ test('creates default neko', () => {
 });
 
 test('state still', () => {
-  const n = wn.defaultNeko();
+  const n = new wn.Neko(
+    wn.defaultConfig,
+    new tenv.StillEnv(),
+    new wn.browserDrawer(),
+  );
+  n.state.x = 10;
+  n.state.y = 10;
+  expect(n.state.img).toBe('still');
 
   n.update();
-  expect(n.state.x).toBe(0);
-  expect(n.state.y).toBe(0);
+  expect(n.state.img).toBe('still');
+  expect(n.state.x).toBe(10);
+  expect(n.state.y).toBe(10);
+
+  n.update();
+  expect(n.state.img).toBe('alert');
+  expect(n.state.x).toBe(10);
+  expect(n.state.y).toBe(10);
 });
-
-// test('state run', () => {
-//   const n = new wn.Neko(wn.defaultConfig, new testEnv());
-//   n.state.x = 1;
-//   n.state.y = 1;
-
-//   n.next();
-//   n.state.img;
-//   expect(n.state.img).toBe('nwrun');
-//   // expect(n.state.x).toBe(0);
-//   // expect(n.state.y).toBe(0);
-// });

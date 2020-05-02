@@ -32,7 +32,7 @@ export class Neko {
 
     if (this.state.img == 'still') {
       if (
-        Math.hypot(this.state.x - this.env.x, this.state.y - this.env.y) < 10
+        Math.hypot(this.state.x - this.env.x, this.state.y - this.env.y) > 10
       ) {
         this.state.img = 'alert';
       }
