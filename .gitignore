@@ -5,8 +5,7 @@ node_modules/
 build
 
 # to ignore build files
-public/index.js
-public/index.js.map
+public/tsneko.js
 
 # code coverage
 coverage

@@ -17,7 +17,10 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
-    filename: 'index.js',
-    path: path.resolve(__dirname, 'build'),
+    filename: 'tsneko.js',
+    path: path.resolve(__dirname, 'lib'),
+    library: 'tsneko',
+    libraryTarget: 'umd',
+    globalObject: 'this',
   },
 };

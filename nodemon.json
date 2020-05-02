@@ -1,5 +1,5 @@
 {
-  "watch": ["src", "public/index.html"],
+  "watch": ["src", "public/index.html", "webpack.config.js"],
   "ext": ".ts,.js",
   "ignore": [],
   "exec": "concurrently \"npm run public\" \"http-server public\""
