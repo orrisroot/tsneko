@@ -36,6 +36,7 @@ it.each`
   ${{ x: -10, y: 0 }}   | ${'wrun'}
 `(`state run target:$xy direction:$dir`, ({ xy, dir }) => {
   const n = wn.defaultNeko();
+  n.state.ticksBeforeItch = 999;
 
   n.state.x = 0;
   n.state.y = 0;
@@ -60,4 +61,38 @@ it.each`
   expect(n.state.x).toBeCloseTo(xy.x, 0);
   expect(n.state.y).toBeCloseTo(xy.y, 0);
   expect(n.img).toBe('still');
+});
+
+test('state itch', () => {
+  const n = wn.defaultNeko();
+
+  n.update(0, 0);
+  expect(n.state.name).toBe('still');
+
+  n.update(0, 0);
+  expect(n.state.name).toBe('still');
+
+  n.update(0, 0);
+  expect(n.state.name).toBe('still');
+
+  n.update(0, 0);
+  expect(n.state.name).toBe('still');
+
+  n.update(0, 0);
+  expect(n.state.name).toBe('still');
+
+  n.update(0, 0);
+  expect(n.state.name).toBe('itch');
+
+  n.update(0, 0);
+  expect(n.state.name).toBe('itch');
+
+  n.update(0, 0);
+  expect(n.state.name).toBe('itch');
+
+  n.update(0, 0);
+  expect(n.state.name).toBe('itch');
+
+  n.update(0, 0);
+  expect(n.state.name).toBe('still');
 });

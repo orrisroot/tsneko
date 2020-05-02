@@ -1,11 +1,13 @@
 export interface NekoConfig {
   speed: number;
   radius: number;
+  ticksBeforeItch: number;
 }
 
 export const defaultConfig: NekoConfig = {
   speed: 2,
   radius: 1,
+  ticksBeforeItch: 5,
 };
 
 export class Neko {
@@ -15,7 +17,9 @@ export class Neko {
     y: number;
     tick?: number;
     direction?: string;
-  } = { name: 'still', x: 0, y: 0 };
+    ticksBeforeItch: number;
+    framesItch?: number;
+  } = { name: 'still', x: 0, y: 0, ticksBeforeItch: 5 };
 
   get img(): string {
     return `${this.state.direction ? this.state.direction : ''}${
@@ -26,7 +30,8 @@ export class Neko {
   config: NekoConfig;
 
   constructor(config: NekoConfig) {
-    this.config = config;
+    this.config = { ...config };
+    this.state.ticksBeforeItch = config.ticksBeforeItch;
   }
 
   // updates the state
@@ -36,6 +41,36 @@ export class Neko {
         this.state.name = 'alert';
         this.state.tick = null;
       }
+
+      // todo make random
+      if (this.state.ticksBeforeItch === 0) {
+        this.state.name = 'itch';
+        this.state.framesItch = 4;
+        this.state.tick = 1;
+        return;
+      }
+
+      this.state.ticksBeforeItch -= 1;
+    } else if (this.state.name == 'itch') {
+      if (!this.cursorClose(x, y)) {
+        this.state.name = 'alert';
+        this.state.tick = null;
+        this.state.framesItch = null;
+        this.state.ticksBeforeItch = this.config.ticksBeforeItch;
+        return;
+      }
+
+      // done itching
+      if (this.state.framesItch - 1 == 0) {
+        this.state.name = 'still';
+        this.state.tick = null;
+        this.state.framesItch = null;
+        this.state.ticksBeforeItch = this.config.ticksBeforeItch;
+        return;
+      }
+
+      this.state.framesItch -= 1;
+      this.state.tick = this.state.tick === 1 ? 2 : 1;
     } else if (this.state.name == 'alert') {
       if (this.cursorClose(x, y)) {
         this.state.name = 'still';
