@@ -37,65 +37,80 @@ export class Neko {
   // updates the state
   update = (x: number, y: number) => {
     if (this.state.name == 'still') {
-      if (!this.cursorClose(x, y)) {
-        this.state.name = 'alert';
-        this.state.tick = null;
-      }
-
-      // todo make random
-      if (this.state.ticksBeforeItch === 0) {
-        this.state.name = 'itch';
-        this.state.framesItch = 4;
-        this.state.tick = 1;
-        return;
-      }
-
-      this.state.ticksBeforeItch -= 1;
+      this.updateStill(x, y);
     } else if (this.state.name == 'itch') {
-      if (!this.cursorClose(x, y)) {
-        this.state.name = 'alert';
-        this.state.tick = null;
-        this.state.framesItch = null;
-        this.state.ticksBeforeItch = this.config.ticksBeforeItch;
-        return;
-      }
-
-      // done itching
-      if (this.state.framesItch - 1 == 0) {
-        this.state.name = 'still';
-        this.state.tick = null;
-        this.state.framesItch = null;
-        this.state.ticksBeforeItch = this.config.ticksBeforeItch;
-        return;
-      }
-
-      this.state.framesItch -= 1;
-      this.state.tick = this.state.tick === 1 ? 2 : 1;
+      this.updateItch(x, y);
     } else if (this.state.name == 'alert') {
-      if (this.cursorClose(x, y)) {
-        this.state.name = 'still';
-        this.state.tick = null;
-        this.state.direction = null;
-        return;
-      }
-
-      this.state.tick = 1;
-      this.state.name = 'run';
-      this.state.direction = this.chooseRunDirection(x, y);
-      this.makeStep(x, y);
+      this.updateAlert(x, y);
     } else if (this.state.name == 'run') {
-      if (this.cursorClose(x, y)) {
-        this.state.name = 'still';
-        this.state.tick = null;
-        this.state.direction = null;
-        return;
-      }
-
-      this.state.direction = this.chooseRunDirection(x, y);
-      this.state.tick = this.state.tick === 1 ? 2 : 1;
-      this.makeStep(x, y);
+      this.updateRun(x, y);
     }
   };
+
+  updateStill(x: number, y: number) {
+    if (!this.cursorClose(x, y)) {
+      this.state.name = 'alert';
+      this.state.tick = null;
+    }
+
+    // todo make random
+    if (this.state.ticksBeforeItch === 0) {
+      this.state.name = 'itch';
+      this.state.framesItch = 4;
+      this.state.tick = 1;
+      return;
+    }
+
+    this.state.ticksBeforeItch -= 1;
+  }
+  updateItch(x: number, y: number) {
+    if (!this.cursorClose(x, y)) {
+      this.state.name = 'alert';
+      this.state.tick = null;
+      this.state.framesItch = null;
+      this.state.ticksBeforeItch = this.config.ticksBeforeItch;
+      return;
+    }
+
+    // done itching
+    if (this.state.framesItch - 1 == 0) {
+      this.state.name = 'still';
+      this.state.tick = null;
+      this.state.framesItch = null;
+      this.state.ticksBeforeItch = this.config.ticksBeforeItch;
+      return;
+    }
+
+    this.state.framesItch -= 1;
+    this.state.tick = this.state.tick === 1 ? 2 : 1;
+  }
+
+  updateAlert(x: number, y: number) {
+    if (this.cursorClose(x, y)) {
+      this.state.name = 'still';
+      this.state.tick = null;
+      this.state.direction = null;
+      return;
+    }
+
+    this.state.tick = 1;
+    this.state.name = 'run';
+    this.state.direction = this.chooseRunDirection(x, y);
+    this.makeStep(x, y);
+  }
+
+  updateRun(x: number, y: number) {
+    if (this.cursorClose(x, y)) {
+      this.state.name = 'still';
+      this.state.tick = null;
+      this.state.direction = null;
+      return;
+    }
+
+    this.state.direction = this.chooseRunDirection(x, y);
+    this.state.tick = this.state.tick === 1 ? 2 : 1;
+    this.makeStep(x, y);
+  }
 
   private makeStep(x: number, y: number) {
     // x=0 y=-10

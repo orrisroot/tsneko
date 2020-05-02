@@ -68,28 +68,21 @@ test('state itch', () => {
 
   n.update(0, 0);
   expect(n.state.name).toBe('still');
-
   n.update(0, 0);
   expect(n.state.name).toBe('still');
-
   n.update(0, 0);
   expect(n.state.name).toBe('still');
-
   n.update(0, 0);
   expect(n.state.name).toBe('still');
-
   n.update(0, 0);
   expect(n.state.name).toBe('still');
 
   n.update(0, 0);
   expect(n.state.name).toBe('itch');
-
   n.update(0, 0);
   expect(n.state.name).toBe('itch');
-
   n.update(0, 0);
   expect(n.state.name).toBe('itch');
-
   n.update(0, 0);
   expect(n.state.name).toBe('itch');
 

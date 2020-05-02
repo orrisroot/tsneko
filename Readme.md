@@ -11,9 +11,9 @@ Roadmap:
 * Still
 * Alert
 * Run
+* Itch
 
 Not implemented:
-* Itch
 * Scratch
 * Yawn
 * Sleep
