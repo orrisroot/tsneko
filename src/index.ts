@@ -1,42 +1,48 @@
-import { NekoState, Still } from './state';
-import { NekoEnvironment } from './environment';
+import { NekoEnvironment, browserEnvironment } from './environment';
+import { NekoDrawer, browserDrawer } from './drawer';
 
 export interface NekoConfig {
   speed: number;
 }
 
 export const defaultConfig: NekoConfig = {
-  speed: 3,
+  speed: 1,
 };
 
-class browserEnvironment implements NekoEnvironment {
-  cursorX: number = 0;
-  cursorY: number = 0;
-  updateEnvironment() {
-    // TODO get cursorX, cursorY
-  }
-}
-
 class Neko {
-  config: NekoConfig;
-  state: NekoState;
-  env: NekoEnvironment;
+  state: {
+    img: string;
+    x: number;
+    y: number;
+  } = { img: 'still', x: 0, y: 0 };
 
-  constructor(config: NekoConfig, env: NekoEnvironment) {
+  config: NekoConfig;
+  env: NekoEnvironment;
+  drawer: NekoDrawer;
+
+  constructor(config: NekoConfig, env: NekoEnvironment, drawer: NekoDrawer) {
     this.config = config;
     this.env = env;
-    this.state = new Still();
+    this.drawer = drawer;
   }
 
   // updates the state
-  next = () => {
-    this.env.updateEnvironment();
-    this.state = this.state.next(this.env);
+  update = () => {
+    this.env.update();
+
+    if (this.state.img == 'still') {
+      if (
+        Math.hypot(this.state.x - this.env.x, this.state.y - this.env.y) < 10
+      ) {
+        this.state.img = 'alert';
+      }
+    }
+    this.drawer.draw(this);
   };
 }
 
 export { Neko };
 
 export let defaultNeko = () => {
-  return new Neko(defaultConfig, new browserEnvironment());
+  return new Neko(defaultConfig, new browserEnvironment(), new browserDrawer());
 };
