@@ -1,6 +1,3 @@
-import { NekoEnvironment, browserEnvironment } from './environment';
-import { NekoDrawer, browserDrawer } from './drawer';
-
 export interface NekoConfig {
   speed: number;
 }
@@ -22,26 +19,20 @@ export class Neko {
   }
 
   config: NekoConfig;
-  env: NekoEnvironment;
-  drawer: NekoDrawer;
 
-  constructor(config: NekoConfig, env: NekoEnvironment, drawer: NekoDrawer) {
+  constructor(config: NekoConfig) {
     this.config = config;
-    this.env = env;
-    this.drawer = drawer;
   }
 
   // updates the state
-  update = () => {
-    this.env.update();
-
+  update = (x: number, y: number) => {
     if (this.state.name == 'still') {
-      if (!this.cursorClose()) {
+      if (!this.cursorClose(x, y)) {
         this.state.name = 'alert';
         this.state.tick = null;
       }
     } else if (this.state.name == 'alert') {
-      if (this.cursorClose()) {
+      if (this.cursorClose(x, y)) {
         this.state.name = 'still';
         this.state.tick = null;
         return;
@@ -49,25 +40,24 @@ export class Neko {
 
       // choose run direction
       // choose tick
-      this.state.name = this.chooseRunDirection();
+      this.state.name = this.chooseRunDirection(x, y);
       if (this.state.tick) {
         this.state.tick = ((this.state.tick + 1) % 2) + 1;
       } else {
         this.state.tick = 1;
       }
     }
-    this.drawer.draw(this);
   };
 
-  private cursorClose() {
+  private cursorClose(x: number, y: number) {
     // TODO remove magic number
-    return (
-      Math.hypot(this.state.x - this.env.x, this.state.y - this.env.y) < 10
-    );
+    return Math.hypot(this.state.x - x, this.state.y - y) < 10;
   }
-  private chooseRunDirection(): string {
-    const dx = this.env.x - this.state.x;
-    const dy = this.env.y - this.state.y;
+
+  private chooseRunDirection(x: number, y: number): string {
+    // 0 -10
+    const dx = x - this.state.x;
+    const dy = y - this.state.y;
     const diag = Math.hypot(dx, dy);
     let phi = calcAngleDegrees(dx, dy);
 
@@ -100,5 +90,5 @@ function calcAngleDegrees(x: any, y: any) {
 }
 
 export const defaultNeko = () => {
-  return new Neko(defaultConfig, new browserEnvironment(), new browserDrawer());
+  return new Neko(defaultConfig);
 };
