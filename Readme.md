@@ -8,6 +8,7 @@ Roadmap:
 3. Add browser implementation
 4. Format readme (add gifs and shit)
 5. Add documentation
+  * add tests to cover code
 6. Deploy to js cdn (setup webpack config)
 
 ## States
