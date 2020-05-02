@@ -3,9 +3,12 @@
 Webneko written in typescript
 
 Roadmap:
-1. implement all states as in [webneko](https://webneko.net/)
-2. Format readme (add gifs and shit)
-3. deploy to js cdn (setup webpack config)
+1. <del>implement all states as in [webneko](https://webneko.net/)</del>
+2. Make configuration easier
+3. Add browser implementation
+4. Format readme (add gifs and shit)
+5. Add documentation
+6. Deploy to js cdn (setup webpack config)
 
 ## States
 * Still
