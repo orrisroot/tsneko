@@ -7,3 +7,6 @@ build
 # to ignore build files
 public/index.js
 public/index.js.map
+
+# code coverage
+coverage

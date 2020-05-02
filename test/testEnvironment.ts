@@ -1,14 +1,15 @@
 import { NekoEnvironment } from '../src/environment';
 
-export class Env implements NekoEnvironment {
+export class Run implements NekoEnvironment {
   x: number = 0;
   y: number = 0;
 
   constructor() {
     for (let i = 0; i < 3; i++) {
       for (let j = 0; j < 3; j++) {
+        // one for alert one for run
         this.cursors.push({ x: i * 10, y: j * 10 });
-        this.cursors.push({ x: 10, y: 10 });
+        this.cursors.push({ x: i * 10, y: j * 10 });
       }
     }
   }
@@ -23,7 +24,7 @@ export class Env implements NekoEnvironment {
   }
 }
 
-export class StillEnv implements NekoEnvironment {
+export class Still implements NekoEnvironment {
   x: number = 0;
   y: number = 0;
 

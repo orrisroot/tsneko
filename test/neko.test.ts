@@ -11,20 +11,35 @@ test('creates default neko', () => {
 test('state still', () => {
   const n = new wn.Neko(
     wn.defaultConfig,
-    new tenv.StillEnv(),
+    new tenv.Still(),
     new wn.browserDrawer(),
   );
   n.state.x = 10;
   n.state.y = 10;
-  expect(n.state.img).toBe('still');
+  expect(n.state.name).toBe('still');
 
   n.update();
-  expect(n.state.img).toBe('still');
+  expect(n.state.name).toBe('still');
   expect(n.state.x).toBe(10);
   expect(n.state.y).toBe(10);
 
   n.update();
-  expect(n.state.img).toBe('alert');
+  expect(n.state.name).toBe('alert');
   expect(n.state.x).toBe(10);
   expect(n.state.y).toBe(10);
+});
+
+test('state run', () => {
+  const n = new wn.Neko(
+    wn.defaultConfig,
+    new tenv.Run(),
+    new wn.browserDrawer(),
+  );
+
+  n.state.x = 10;
+  n.state.y = 10;
+  n.update();
+  expect(n.state.name).toBe('alert');
+  n.update();
+  expect(n.state.name).toBe('nwrun');
 });

@@ -5,6 +5,7 @@
   "main": "build/index.js",
   "scripts": {
     "test": "jest",
+    "coverage": "jest --coverage",
     "build": "webpack",
     "public": "npm run build && cp build/* public",
     "dev": "nodemon"
