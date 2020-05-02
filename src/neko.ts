@@ -3,6 +3,7 @@ export interface NekoConfig {
   radius: number;
   ticksBeforeItch: number;
   ticksBeforeScratch: number;
+  ticksBeforeYawn: number;
 
   //generates scratch direction at each call
   scratchDirection: () => 's' | 'w' | 'e' | 'n';
@@ -13,6 +14,7 @@ export const defaultConfig: NekoConfig = {
   radius: 1,
   ticksBeforeItch: 5,
   ticksBeforeScratch: 5,
+  ticksBeforeYawn: 10,
   scratchDirection: () => {
     const directions = {
       1: 's',
@@ -37,7 +39,16 @@ export class Neko {
     framesItch?: number;
     ticksBeforeScratch: number;
     framesScratch?: number;
-  } = { name: 'still', x: 0, y: 0, ticksBeforeItch: 5, ticksBeforeScratch: 5 };
+    ticksBeforeYawn: number;
+    framesYawn?: number;
+  } = {
+    name: 'still',
+    x: 0,
+    y: 0,
+    ticksBeforeItch: 5,
+    ticksBeforeScratch: 5,
+    ticksBeforeYawn: 10,
+  };
 
   get img(): string {
     return `${this.state.direction ? this.state.direction : ''}${
@@ -51,6 +62,7 @@ export class Neko {
     this.config = { ...config };
     this.state.ticksBeforeItch = config.ticksBeforeItch;
     this.state.ticksBeforeScratch = config.ticksBeforeScratch;
+    this.state.ticksBeforeYawn = config.ticksBeforeYawn;
   }
 
   // updates the state
@@ -65,8 +77,41 @@ export class Neko {
       this.updateRun(x, y);
     } else if (this.state.name == 'scratch') {
       this.updateScratch(x, y);
+    } else if (this.state.name == 'yawn') {
+      this.updateYawn(x, y);
+    } else if (this.state.name == 'sleep') {
+      this.updateSleep(x, y);
     }
   };
+
+  updateSleep(x: number, y: number) {
+    // reset ticks
+    if (!this.cursorClose(x, y)) {
+      this.state.name = 'alert';
+      this.state.tick = null;
+      return;
+    }
+
+    this.state.tick = this.state.tick === 1 ? 2 : 1;
+  }
+
+  updateYawn(x: number, y: number) {
+    // reset ticks
+    if (!this.cursorClose(x, y)) {
+      this.state.name = 'alert';
+      this.state.framesYawn = null;
+      return;
+    }
+
+    if (this.state.framesYawn - 1 == 0) {
+      this.state.name = 'sleep';
+      this.state.tick = 1;
+      this.state.framesYawn = null;
+      this.state.ticksBeforeYawn = this.config.ticksBeforeYawn;
+    }
+
+    this.state.framesYawn -= 1;
+  }
 
   updateScratch(x: number, y: number) {
     if (!this.cursorClose(x, y)) {
@@ -96,6 +141,13 @@ export class Neko {
     if (!this.cursorClose(x, y)) {
       this.state.name = 'alert';
       this.state.tick = null;
+    }
+
+    // todo make random
+    if (this.state.ticksBeforeYawn === 0) {
+      this.state.name = 'yawn';
+      this.state.framesYawn = 2;
+      return;
     }
 
     // todo make random
@@ -162,6 +214,7 @@ export class Neko {
       return;
     }
 
+    this.state.ticksBeforeYawn = Math.max(this.state.ticksBeforeYawn - 1, 0);
     this.state.direction = this.chooseRunDirection(x, y);
     this.state.tick = this.state.tick === 1 ? 2 : 1;
     this.makeStep(x, y);

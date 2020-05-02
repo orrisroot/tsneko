@@ -13,7 +13,5 @@ Roadmap:
 * Run
 * Itch
 * Scratch
-
-Not implemented:
 * Yawn
 * Sleep

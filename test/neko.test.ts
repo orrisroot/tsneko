@@ -38,6 +38,7 @@ it.each`
   const n = wn.defaultNeko();
   n.state.ticksBeforeItch = -1;
   n.state.ticksBeforeScratch = -1;
+  n.state.ticksBeforeYawn = 1000;
 
   n.state.x = 0;
   n.state.y = 0;
@@ -66,6 +67,8 @@ it.each`
 
 test('state itch', () => {
   const n = wn.defaultNeko();
+  n.state.ticksBeforeScratch = -1;
+  n.state.ticksBeforeYawn = 1000;
 
   n.update(0, 0);
   expect(n.state.name).toBe('still');
@@ -100,6 +103,7 @@ it.each`
 `('state scrath $dir', ({ dir, img }) => {
   const n = wn.defaultNeko();
   n.state.ticksBeforeItch = -1;
+  n.state.ticksBeforeYawn = 1000;
 
   // change scratch config
   n.config.scratchDirection = () => {
@@ -128,4 +132,28 @@ it.each`
 
   n.update(0, 0);
   expect(n.state.name).toBe('still');
+});
+
+test('state yawn and sleep', () => {
+  const n = wn.defaultNeko();
+
+  for (let i = 0; i < 20; i++) {
+    n.update(999, 999);
+  }
+
+  n.update(n.state.x, n.state.y);
+  expect(n.state.name).toBe('still');
+
+  n.update(n.state.x, n.state.y);
+  expect(n.state.name).toBe('yawn');
+  n.update(n.state.x, n.state.y);
+  expect(n.state.name).toBe('yawn');
+
+  for (let i = 0; i < 200; i++) {
+    n.update(n.state.x, n.state.y);
+    expect(n.state.name).toBe('sleep');
+  }
+
+  n.update(0, 0);
+  expect(n.state.name).toBe('alert');
 });
