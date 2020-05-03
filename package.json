@@ -7,7 +7,7 @@
     "build:ts": "tsc",
     "bundle": "webpack",
     "bundle-dev": "webpack --config webpack.config.dev.js",
-    "public": "npm run bundle && cp _bundle/tsneko.js example",
+    "build:example": "npm run bundle && cp _bundle/tsneko.js example",
     "dev": "nodemon",
     "example": "http-server example"
   },

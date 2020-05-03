@@ -9,23 +9,26 @@ export interface NekoConfig {
   scratchDirection: () => 's' | 'w' | 'e' | 'n';
 }
 
+const randInt = (min: number, max: number) =>
+  Math.floor(Math.random() * (max - min + 1)) + min;
+
 export const defaultConfig: NekoConfig = {
   speed: 10,
   radius: 10,
   ticksBeforeItch: () => {
     let min = 7;
     let max = 14;
-    return Math.random() * (max - min) + min;
+    return randInt(min, max);
   },
   ticksBeforeScratch: () => {
     let min = 7;
     let max = 14;
-    return Math.random() * (max - min) + min;
+    return randInt(min, max);
   },
   ticksBeforeYawn: () => {
     let min = 20;
     let max = 40;
-    return Math.random() * (max - min) + min;
+    return randInt(min, max);
   },
   scratchDirection: () => {
     const directions = {
