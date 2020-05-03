@@ -17,7 +17,7 @@ module.exports = {
   },
   output: {
     filename: 'tsneko.js',
-    path: path.resolve(__dirname, 'lib'),
+    path: path.resolve(__dirname, '_bundle'),
     library: 'tsneko',
     libraryTarget: 'umd',
     globalObject: 'this',
