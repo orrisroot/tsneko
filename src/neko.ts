@@ -1,9 +1,9 @@
 export interface NekoConfig {
   speed: number;
   radius: number;
-  ticksBeforeItch: number;
-  ticksBeforeScratch: number;
-  ticksBeforeYawn: number;
+  ticksBeforeItch: () => number;
+  ticksBeforeScratch: () => number;
+  ticksBeforeYawn: () => number;
 
   //generates scratch direction at each call
   scratchDirection: () => 's' | 'w' | 'e' | 'n';
@@ -12,9 +12,21 @@ export interface NekoConfig {
 export const defaultConfig: NekoConfig = {
   speed: 10,
   radius: 10,
-  ticksBeforeItch: 8,
-  ticksBeforeScratch: 12,
-  ticksBeforeYawn: 30,
+  ticksBeforeItch: () => {
+    let min = 7;
+    let max = 14;
+    return Math.random() * (max - min) + min;
+  },
+  ticksBeforeScratch: () => {
+    let min = 7;
+    let max = 14;
+    return Math.random() * (max - min) + min;
+  },
+  ticksBeforeYawn: () => {
+    let min = 20;
+    let max = 40;
+    return Math.random() * (max - min) + min;
+  },
   scratchDirection: () => {
     const directions = {
       1: 's',
@@ -60,9 +72,9 @@ export class Neko {
 
   constructor(config: NekoConfig) {
     this.config = { ...config };
-    this.state.ticksBeforeItch = config.ticksBeforeItch;
-    this.state.ticksBeforeScratch = config.ticksBeforeScratch;
-    this.state.ticksBeforeYawn = config.ticksBeforeYawn;
+    this.state.ticksBeforeItch = config.ticksBeforeItch();
+    this.state.ticksBeforeScratch = config.ticksBeforeScratch();
+    this.state.ticksBeforeYawn = config.ticksBeforeYawn();
   }
 
   // updates the state
@@ -89,8 +101,8 @@ export class Neko {
     if (!this.cursorClose(x, y)) {
       this.state.name = 'alert';
       this.state.tick = null;
-      this.state.ticksBeforeItch = this.config.ticksBeforeItch;
-      this.state.ticksBeforeScratch = this.config.ticksBeforeScratch;
+      this.state.ticksBeforeItch = this.config.ticksBeforeItch();
+      this.state.ticksBeforeScratch = this.config.ticksBeforeScratch();
       return;
     }
 
@@ -109,7 +121,7 @@ export class Neko {
       this.state.name = 'sleep';
       this.state.tick = 1;
       this.state.framesYawn = null;
-      this.state.ticksBeforeYawn = this.config.ticksBeforeYawn;
+      this.state.ticksBeforeYawn = this.config.ticksBeforeYawn();
     }
 
     this.state.framesYawn -= 1;
@@ -120,7 +132,7 @@ export class Neko {
       this.state.name = 'alert';
       this.state.tick = null;
       this.state.framesScratch = null;
-      this.state.ticksBeforeScratch = this.config.ticksBeforeScratch;
+      this.state.ticksBeforeScratch = this.config.ticksBeforeScratch();
       this.state.direction = null;
       return;
     }
@@ -130,7 +142,7 @@ export class Neko {
       this.state.name = 'still';
       this.state.tick = null;
       this.state.framesScratch = null;
-      this.state.ticksBeforeScratch = this.config.ticksBeforeScratch;
+      this.state.ticksBeforeScratch = this.config.ticksBeforeScratch();
       this.state.direction = null;
       return;
     }
@@ -177,7 +189,7 @@ export class Neko {
       this.state.name = 'alert';
       this.state.tick = null;
       this.state.framesItch = null;
-      this.state.ticksBeforeItch = this.config.ticksBeforeItch;
+      this.state.ticksBeforeItch = this.config.ticksBeforeItch();
       return;
     }
 
@@ -186,7 +198,7 @@ export class Neko {
       this.state.name = 'still';
       this.state.tick = null;
       this.state.framesItch = null;
-      this.state.ticksBeforeItch = this.config.ticksBeforeItch;
+      this.state.ticksBeforeItch = this.config.ticksBeforeItch();
       return;
     }
 

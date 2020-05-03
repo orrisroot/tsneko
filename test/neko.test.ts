@@ -3,9 +3,9 @@ import * as wn from '../src/index';
 let testConfig: wn.NekoConfig = {
   speed: 2,
   radius: 1,
-  ticksBeforeItch: 5,
-  ticksBeforeScratch: 5,
-  ticksBeforeYawn: 10,
+  ticksBeforeItch: () => 5,
+  ticksBeforeScratch: () => 5,
+  ticksBeforeYawn: () => 10,
   scratchDirection: () => {
     const directions = {
       1: 's',
