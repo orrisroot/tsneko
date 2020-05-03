@@ -13,7 +13,6 @@ export function main(n: Neko.Neko, assetsDir: string) {
   let cx = 0;
   let cy = 0;
   document.onmousemove = (ev) => {
-    console.log(ev.x, ev.y);
     cx = ev.x;
     cy = ev.y;
   };
@@ -23,11 +22,11 @@ export function main(n: Neko.Neko, assetsDir: string) {
   const tick = () => {
     n.update(cx, cy);
     draw(e, n, assetsDir);
-    console.log('tick');
   };
 
-  const handle = setInterval(tick, 500);
+  const handle = setInterval(tick, 300);
   return () => {
+    // TODO remove neko
     clearInterval(handle);
   };
 }

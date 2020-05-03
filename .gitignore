@@ -1,11 +1,5 @@
 # Dependency directories
 node_modules/
 
-# output dir
-build
-
-# to ignore build files
-public/tsneko.js
-
 # code coverage
 coverage

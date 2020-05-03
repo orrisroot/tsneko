@@ -5,18 +5,18 @@
   "main": "build/index.js",
   "scripts": {
     "test": "jest",
-    "coverage": "jest --coverage",
     "build": "webpack",
-    "public": "npm run build && cp lib/* public",
-    "dev": "nodemon"
+    "build-dev": "webpack --config webpack.config.dev.js",
+    "public": "npm run build && cp lib/* example",
+    "dev": "nodemon",
+    "example": "http-server example"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test",
-      "pre-push": "npm run test"
+      "pre-commit": "npm test"
     }
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
 {
-  "watch": ["src", "public/index.html", "webpack.config.js"],
+  "watch": ["src", "public/index.html", "webpack.config.dev.js"],
   "ext": ".ts,.js",
   "ignore": [],
-  "exec": "concurrently \"npm run public\" \"http-server public\""
+  "exec": "concurrently \"npm run build-dev && cp -r lib/* example\" \"npm run example\""
 }
