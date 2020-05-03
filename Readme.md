@@ -14,7 +14,7 @@ Idea and assets stolen from [webneko.net](https://webneko.net/)
 - Yawn ![yawn](https://i.imgur.com/HStNSdN.gif)
 - Sleep ![sleep](https://i.imgur.com/oFRAKC4.gif)
 
-## 🚀 Example
+## 🚀Example
 
 You can run a demo locally:
 
@@ -27,7 +27,9 @@ Navigate to http://127.0.0.1:8080 or http://localhost:8080 to see a live demo
 
 // TODO deploy to cdn
 
-## 🛠️ Installation and Usage
+## 🛠️Installation and Usage
+
+### Webpage
 
 If you simply want to add it to your 🕸️webpage🕸️:
 
@@ -43,6 +45,8 @@ If you simply want to add it to your 🕸️webpage🕸️:
 </script>
 ```
 
+### Node
+
 If you want to use it in your node project:
 
 Use the node package manager [npm](https://www.npmjs.com/)
@@ -51,8 +55,23 @@ Use the node package manager [npm](https://www.npmjs.com/)
 npm install tsneko
 ```
 
+#### Import:
+
+CommonJS
+
 ```javascript
 const tsneko = require('tsneko');
+```
+
+ES6 modules
+
+```javascript
+import * as tsneko from '../tsneko/lib/index';
+```
+
+### Use:
+
+```javascript
 let clean = tsneko.run(n, 'assets/socks');
 // some time later
 // call clean() to remove it from the document
@@ -75,7 +94,7 @@ code stinks
 
 although it shouldn't matter to you if you only want to use it
 
-## Roadmap
+## 🚧Roadmap
 
 1. <del>implement all states as in [webneko](https://webneko.net/)</del>
 2. Make configuration easier
