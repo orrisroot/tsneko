@@ -9,7 +9,7 @@
 
 import * as Neko from './index';
 
-export function main(n: Neko.Neko, assetsDir: string) {
+export function run(n: Neko.Neko, assetsDir: string) {
   let cx = 0;
   let cy = 0;
   document.onmousemove = (ev) => {
@@ -26,8 +26,8 @@ export function main(n: Neko.Neko, assetsDir: string) {
 
   const handle = setInterval(tick, 300);
   return () => {
-    // TODO remove neko
     clearInterval(handle);
+    e.remove();
   };
 }
 

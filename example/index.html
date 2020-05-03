@@ -7,12 +7,13 @@
     <script src="tsneko.js"></script>
   </head>
   <body>
-    kappa213 kappa213
+    <noscript>enable javascript to run the neko</noscript>
   </body>
   <script>
     const n = new tsneko.defaultNeko();
-    n.config.speed = 10;
-    n.config.radius = 10;
-    tsneko.main(n, 'assets/socks');
+    // n.config.speed = 10;
+    // n.config.radius = 10;
+    let clean = tsneko.run(n, 'assets/socks');
+    // setTimeout(clean, 5000);
   </script>
 </html>

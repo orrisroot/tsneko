@@ -1,5 +1,5 @@
 {
-  "watch": ["src", "public/index.html", "webpack.config.dev.js"],
+  "watch": ["src", "example/index.html", "webpack.config.dev.js"],
   "ext": ".ts,.js",
   "ignore": [],
   "exec": "concurrently \"npm run build-dev && cp -r lib/* example\" \"npm run example\""
