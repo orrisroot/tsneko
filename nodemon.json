@@ -2,5 +2,5 @@
   "watch": ["src", "example/index.html", "webpack.config.dev.js"],
   "ext": ".ts,.js",
   "ignore": [],
-  "exec": "concurrently \"npm run bundle-dev && cp -r bundle/* example\" \"npm run example\""
+  "exec": "concurrently \"npm run bundle-dev && cp -r _bundle/* example\" \"npm run example\""
 }
