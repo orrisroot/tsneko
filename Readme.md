@@ -60,6 +60,8 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 ## ⚠️Warning⚠️
 code stinks
 
+although it shouldn't matter to you if you only want to use it
+
 ## Roadmap
 1. <del>implement all states as in [webneko](https://webneko.net/)</del>
 2. Make configuration easier
