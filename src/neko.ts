@@ -10,11 +10,11 @@ export interface NekoConfig {
 }
 
 export const defaultConfig: NekoConfig = {
-  speed: 2,
-  radius: 1,
-  ticksBeforeItch: 5,
-  ticksBeforeScratch: 5,
-  ticksBeforeYawn: 10,
+  speed: 10,
+  radius: 10,
+  ticksBeforeItch: 8,
+  ticksBeforeScratch: 12,
+  ticksBeforeYawn: 30,
   scratchDirection: () => {
     const directions = {
       1: 's',
@@ -89,6 +89,8 @@ export class Neko {
     if (!this.cursorClose(x, y)) {
       this.state.name = 'alert';
       this.state.tick = null;
+      this.state.ticksBeforeItch = this.config.ticksBeforeItch;
+      this.state.ticksBeforeScratch = this.config.ticksBeforeScratch;
       return;
     }
 

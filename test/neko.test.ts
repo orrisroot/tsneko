@@ -1,14 +1,35 @@
 import * as wn from '../src/index';
 
-test('default neko', () => {
-  const n = wn.defaultNeko();
+let testConfig: wn.NekoConfig = {
+  speed: 2,
+  radius: 1,
+  ticksBeforeItch: 5,
+  ticksBeforeScratch: 5,
+  ticksBeforeYawn: 10,
+  scratchDirection: () => {
+    const directions = {
+      1: 's',
+      2: 'w',
+      3: 'e',
+      4: 'n',
+    };
+    const rnd = Math.floor(Math.random() * (5 - 1)) + 1;
+    // @ts-ignore
+    return directions[rnd];
+  },
+};
 
+let n: wn.Neko;
+beforeEach(() => {
+  n = new wn.Neko(testConfig);
+});
+
+test('default neko', () => {
   expect(n.state.x).toBe(0);
   expect(n.state.y).toBe(0);
 });
 
 test('state still', () => {
-  const n = wn.defaultNeko();
   expect(n.state.name).toBe('still');
   expect(n.state.x).toBe(0);
   expect(n.state.y).toBe(0);
@@ -25,7 +46,6 @@ test('state still', () => {
 });
 
 test('state alert', () => {
-  const n = wn.defaultNeko();
   n.update(10, 10);
   expect(n.img).toBe('alert');
   n.update(0, 0);
@@ -43,7 +63,6 @@ it.each`
   ${{ x: -10, y: 10 }}  | ${'swrun'}
   ${{ x: -10, y: 0 }}   | ${'wrun'}
 `('state run target:$xy direction:$dir', ({ xy, dir }) => {
-  const n = wn.defaultNeko();
   n.state.ticksBeforeItch = -1;
   n.state.ticksBeforeScratch = -1;
   n.state.ticksBeforeYawn = 1000;
@@ -74,7 +93,6 @@ it.each`
 });
 
 test('state itch', () => {
-  const n = wn.defaultNeko();
   n.state.ticksBeforeScratch = -1;
   n.state.ticksBeforeYawn = 1000;
 
@@ -120,7 +138,6 @@ it.each`
   ${'e'} | ${'escratch'}
   ${'n'} | ${'nscratch'}
 `('state scrath $dir', ({ dir, img }) => {
-  const n = wn.defaultNeko();
   n.state.ticksBeforeItch = -1;
   n.state.ticksBeforeYawn = 1000;
 
@@ -165,8 +182,6 @@ it.each`
 });
 
 test('state yawn and sleep', () => {
-  const n = wn.defaultNeko();
-
   for (let i = 0; i < 20; i++) {
     n.update(999, 999);
   }
