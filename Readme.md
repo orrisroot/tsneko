@@ -1,6 +1,4 @@
-# WebNeko
-
-# tsneko
+# 😹tsneko
 
 **tsneko** is a js library which adds a neko ![neko](https://i.imgur.com/2Q9Nhj0.gif) to your website
 
