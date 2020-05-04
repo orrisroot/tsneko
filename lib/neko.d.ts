@@ -7,9 +7,18 @@ export interface NekoConfig {
     scratchDirection: () => 's' | 'w' | 'e' | 'n';
 }
 export declare const defaultConfig: NekoConfig;
-export declare class Neko {
+export interface NekoInterface {
     state: {
-        name: string;
+        x: number;
+        y: number;
+    };
+    update: (x: number, y: number) => void;
+    img: string;
+}
+export declare const defaultNeko: () => NekoInterface;
+export declare class Neko implements NekoInterface {
+    state: {
+        name: 'still' | 'itch' | 'alert' | 'run' | 'scratch' | 'yawn' | 'sleep';
         x: number;
         y: number;
         tick?: number;
@@ -32,8 +41,7 @@ export declare class Neko {
     updateItch(x: number, y: number): void;
     updateAlert(x: number, y: number): void;
     updateRun(x: number, y: number): void;
-    private makeStep;
-    private cursorClose;
-    private chooseRunDirection;
+    makeStep(x: number, y: number): void;
+    cursorClose(x: number, y: number): boolean;
+    chooseRunDirection(x: number, y: number): string;
 }
-export declare const defaultNeko: () => Neko;

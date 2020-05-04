@@ -37,8 +37,8 @@ If you simply want to add it to your 🕸️webpage🕸️:
 <script src="tsneko.js"></script>
 <!-- then -->
 <script>
-  const n = new tsneko.defaultNeko();
-  let clean = tsneko.run(n, 'assets/socks');
+  let clean = tsneko.runWebDefault();
+
   // some time later
   // call clean() to remove it from the document
   clean();
@@ -60,22 +60,28 @@ npm install tsneko
 CommonJS
 
 ```javascript
-const tsneko = require('tsneko');
+const tsneko = require('tsneko/lib');
 ```
 
 ES6 modules
 
 ```javascript
-import * as tsneko from '../tsneko/lib/index';
+import * as tsneko from 'tsneko/lib';
 ```
 
 ### Use:
 
 ```javascript
-let clean = tsneko.run(n, 'assets/socks');
-// some time later
-// call clean() to remove it from the document
-clean();
+// You can also use the neko class only (without drawing it on the screen)
+let neko = tsneko.defaultNeko();
+
+neko.update(cursorX, cursorY); // to update the state
+
+neko.state.x, neko.state.y; // to get neko position
+neko.img; // to get the image
+
+// You can actually try to embed it into an electron app
+// see src/web.ts for browser implementation
 ```
 
 ## 🎉Contributing
@@ -101,7 +107,7 @@ although it shouldn't matter to you if you only want to use it
    - expose interface
 3. <del>Add browser implementation</del>
 4. <del>Format readme (add gifs and shit)</del>
-5. make api more intuitive
+5. <del>make api more intuitive</del>
 6. Deploy to js cdn
 7. Preload assets on load
 8. Bundle all images

@@ -1,4 +1,4 @@
 // export { Neko, NekoConfig, defaultConfig, defaultNeko } from './neko';
 export * from './neko';
 
-export { run } from './web';
+export { run as runWeb, runDefault as runWebDefault } from './web';

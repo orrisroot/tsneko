@@ -43,9 +43,23 @@ export const defaultConfig: NekoConfig = {
   },
 };
 
-export class Neko {
+export interface NekoInterface {
   state: {
-    name: string;
+    x: number;
+    y: number;
+  };
+
+  update: (x: number, y: number) => void;
+  img: string;
+}
+
+export const defaultNeko = (): NekoInterface => {
+  return new Neko(defaultConfig);
+};
+
+export class Neko implements NekoInterface {
+  state: {
+    name: 'still' | 'itch' | 'alert' | 'run' | 'scratch' | 'yawn' | 'sleep';
     x: number;
     y: number;
     tick?: number;
@@ -187,6 +201,7 @@ export class Neko {
     this.state.ticksBeforeItch -= 1;
     this.state.ticksBeforeScratch -= 1;
   }
+
   updateItch(x: number, y: number) {
     if (!this.cursorClose(x, y)) {
       this.state.name = 'alert';
@@ -237,7 +252,7 @@ export class Neko {
     this.makeStep(x, y);
   }
 
-  private makeStep(x: number, y: number) {
+  makeStep(x: number, y: number) {
     // x=0 y=-10
     const dx = x - this.state.x;
     const dy = y - this.state.y;
@@ -247,12 +262,12 @@ export class Neko {
     this.state.y += this.config.speed * Math.sin(phi);
   }
 
-  private cursorClose(x: number, y: number) {
+  cursorClose(x: number, y: number) {
     // TODO remove magic number
     return Math.hypot(this.state.x - x, this.state.y - y) < this.config.radius;
   }
 
-  private chooseRunDirection(x: number, y: number): string {
+  chooseRunDirection(x: number, y: number): string {
     const dx = x - this.state.x;
     const dy = y - this.state.y;
     const diag = Math.hypot(dx, dy);
@@ -286,7 +301,3 @@ export class Neko {
 function calcAngleDegrees(x: any, y: any) {
   return (Math.atan2(y, x) * 180) / Math.PI;
 }
-
-export const defaultNeko = () => {
-  return new Neko(defaultConfig);
-};

@@ -1,15 +1,11 @@
-// append element to body
-// take link for assets (assetsDir)
-
-// main
-// return func to stop and clean
-// internally:
-//
-// setInterval(()=>{n.update()})
-
 import * as Neko from './index';
 
-export function run(n: Neko.Neko, assetsDir: string) {
+export function runDefault(assetsDir = '/assets/socks') {
+  const n = Neko.defaultNeko();
+  return run(n, assetsDir);
+}
+
+export function run(n: Neko.NekoInterface, assetsDir: string) {
   let cx = 0;
   let cy = 0;
   document.onmousemove = (ev) => {
@@ -31,7 +27,7 @@ export function run(n: Neko.Neko, assetsDir: string) {
   };
 }
 
-function draw(e: HTMLImageElement, n: Neko.Neko, assetsDir: string) {
+function draw(e: HTMLImageElement, n: Neko.NekoInterface, assetsDir: string) {
   e.style.top = n.state.y + 'px';
   e.style.left = n.state.x + 'px';
   e.src = assetsDir + '/' + n.img + '.gif';
