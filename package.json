@@ -9,7 +9,9 @@
     "bundle-dev": "webpack --config webpack.config.dev.js",
     "build:example": "npm run bundle && cp _bundle/tsneko.js example",
     "dev": "nodemon",
-    "example": "http-server example"
+    "example": "http-server example",
+    "doc:gen": "rm -rf docs && typedoc --excludeNotExported --out docs src",
+    "doc:host": "http-server -p 3228 docs"
   },
   "private": true,
   "keywords": [],
@@ -31,6 +33,7 @@
     "ts-jest": "^25.4.0",
     "ts-loader": "^7.0.2",
     "ts-node": "^8.9.1",
+    "typedoc": "^0.17.6",
     "typescript": "^3.8.3",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.11"

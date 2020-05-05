@@ -84,6 +84,26 @@ neko.img; // to get the image
 // see src/web.ts for browser implementation
 ```
 
+## 📑Documentation
+
+// TODO host documentation
+
+The code is well documented using [typedoc](https://typedoc.org/)
+
+To generate documentation locally:
+
+```bash
+npm run doc:gen
+```
+
+To host it locally
+
+```bash
+npm run doc:host
+```
+
+Then navigate to localhost:3228 in your web browser
+
 ## 🎉Contributing
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
@@ -114,6 +134,6 @@ although it shouldn't matter to you if you only want to use it
 9. commonjs modules
 10. publish to npm
     - setup package.json
-11. Add documentation
+11. <del>Add documentation</del>
     - add tests to cover code
 12. Get rid of all todos

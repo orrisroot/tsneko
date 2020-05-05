@@ -1,18 +1,60 @@
+/**
+ * This module provides {@link Neko} class which encapsulates neko logic
+ *
+ * Most users would want to use {@link defaultNeko}
+ * @packageDocumentation
+ */
+
+/**
+ * Represents the interface for configs<br>
+ * Defines the behaviour of neko
+ *
+ * @export
+ * @interface NekoConfig
+ */
 export interface NekoConfig {
+  /** Used to update neko's position */
   speed: number;
+  /**
+   * Range where neko would not react to cursor<br>
+   * i.e. when the cursor in the circle with the given radius
+   */
   radius: number;
+  /**
+   * Returns the number of ticks before Itching<br>
+   * Used after itching
+   */
   ticksBeforeItch: () => number;
+  /**
+   * Returns the number of ticks before Scratching<br>
+   * Used after scratching
+   */
   ticksBeforeScratch: () => number;
+  /**
+   * Returns the number of ticks before Yawning<br>
+   * Used after yawning
+   */
   ticksBeforeYawn: () => number;
 
-  //generates scratch direction at each call
+  /**
+   * Returns the direction for the current scratch
+   */
   scratchDirection: () => 's' | 'w' | 'e' | 'n';
 }
 
+/**
+ * @internal
+ */
 const randInt = (min: number, max: number) =>
   Math.floor(Math.random() * (max - min + 1)) + min;
 
+/**
+ * The default config for {@link Neko}
+ *
+ * Ticks and scratch direction are randomly generated
+ */
 export const defaultConfig: NekoConfig = {
+  /** The speed param */
   speed: 10,
   radius: 10,
   ticksBeforeItch: () => {
@@ -43,20 +85,40 @@ export const defaultConfig: NekoConfig = {
   },
 };
 
+/**
+ * Represents what Neko should implement so that it can be drawn on the screen
+ *
+ * Used in helper functions
+ * See {@link "web"} module
+ *
+ * @export
+ * @interface NekoInterface
+ */
 export interface NekoInterface {
   state: {
     x: number;
     y: number;
   };
 
-  update: (x: number, y: number) => void;
+  /** Updates the neko's state */
+  update: (cursorX: number, cursorY: number) => void;
   img: string;
 }
 
-export const defaultNeko = (): NekoInterface => {
+/**
+ * Creates a {@link Neko} with {@link defaultConfig}
+ */
+export function defaultNeko(): NekoInterface {
   return new Neko(defaultConfig);
-};
+}
 
+/**
+ * An implementation of neko
+ *
+ * @export
+ * @class Neko
+ * @implements {@link NekoInterface}
+ */
 export class Neko implements NekoInterface {
   state: {
     name: 'still' | 'itch' | 'alert' | 'run' | 'scratch' | 'yawn' | 'sleep';
@@ -298,6 +360,9 @@ export class Neko implements NekoInterface {
   }
 }
 
-function calcAngleDegrees(x: any, y: any) {
+/**
+ * @internal
+ */
+function calcAngleDegrees(x: any, y: any): number {
   return (Math.atan2(y, x) * 180) / Math.PI;
 }
