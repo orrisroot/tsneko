@@ -60,13 +60,13 @@ npm install tsneko
 CommonJS
 
 ```javascript
-const tsneko = require('tsneko/lib');
+const tsneko = require('tsneko');
 ```
 
 ES6 modules
 
 ```javascript
-import * as tsneko from 'tsneko/lib';
+import * as tsneko from 'tsneko';
 ```
 
 ### Use:
