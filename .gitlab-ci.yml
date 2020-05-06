@@ -1,0 +1,8 @@
+documentation:
+  script:
+    - npm run doc:gen
+  artifacts:
+    paths:
+      - public
+  only:
+    - master

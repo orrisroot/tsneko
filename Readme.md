@@ -1,6 +1,7 @@
 # 😹tsneko
 
-**tsneko** is a js library which adds a neko ![neko](https://i.imgur.com/2Q9Nhj0.gif) to your website
+**tsneko** is a js library which adds a neko ![neko](https://i.imgur.com/2Q9Nhj0.gif) to your website ~
+A cat that chases the cursor on your screen
 
 Idea and assets stolen from [webneko.net](https://webneko.net/)
 
@@ -25,8 +26,6 @@ npm run example
 
 Navigate to http://127.0.0.1:8080 or http://localhost:8080 to see a live demo
 
-// TODO deploy to cdn
-
 ## 🛠️Installation and Usage
 
 ### Webpage
@@ -34,7 +33,7 @@ Navigate to http://127.0.0.1:8080 or http://localhost:8080 to see a live demo
 If you simply want to add it to your 🕸️webpage🕸️:
 
 ```html
-<script src="tsneko.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tsneko@0.1.0/_bundle/tsneko.js"></script>
 <!-- then -->
 <script>
   let clean = tsneko.runWebDefault();
@@ -85,8 +84,6 @@ neko.img; // to get the image
 ```
 
 ## 📑Documentation
-
-// TODO host documentation
 
 The code is well documented using [typedoc](https://typedoc.org/)
 

@@ -1,7 +1,7 @@
 {
   "name": "tsneko",
   "version": "0.1.0",
-  "description": "Webneko written in typescript",
+  "description": "Webneko written in typescript | A cat that chases the cursor on your screen",
   "main": "lib/index.js",
   "scripts": {
     "test": "jest",
@@ -17,7 +17,8 @@
   "keywords": [
     "neko",
     "webneko",
-    "yoink"
+    "yoink",
+    "cat"
   ],
   "author": {
     "name": "ixl",
