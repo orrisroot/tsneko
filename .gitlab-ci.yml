@@ -1,6 +1,11 @@
-documentation:
+image: node:14
+
+pages:
+  stage: deploy
   script:
+    - npm install typedoc
     - npm run doc:gen
+    - mv docs public
   artifacts:
     paths:
       - public

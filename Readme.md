@@ -87,6 +87,8 @@ neko.img; // to get the image
 
 The code is well documented using [typedoc](https://typedoc.org/)
 
+The documentation is hosted using github pages [here](https://ixl.gitlab.io/tsneko/globals.html)
+
 To generate documentation locally:
 
 ```bash

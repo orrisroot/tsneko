@@ -236,14 +236,12 @@ export class Neko implements NekoInterface {
       this.state.tick = null;
     }
 
-    // todo make random
     if (this.state.ticksBeforeYawn === 0) {
       this.state.name = 'yawn';
       this.state.framesYawn = 2;
       return;
     }
 
-    // todo make random
     if (this.state.ticksBeforeItch === 0) {
       this.state.name = 'itch';
       this.state.framesItch = 4;
@@ -251,7 +249,6 @@ export class Neko implements NekoInterface {
       return;
     }
 
-    // todo make random
     if (this.state.ticksBeforeScratch === 0) {
       this.state.name = 'scratch';
       this.state.framesScratch = 4;
@@ -325,7 +322,6 @@ export class Neko implements NekoInterface {
   }
 
   cursorClose(x: number, y: number) {
-    // TODO remove magic number
     return Math.hypot(this.state.x - x, this.state.y - y) < this.config.radius;
   }
 
