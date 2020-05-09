@@ -19,6 +19,7 @@ import * as Neko from './index';
  */
 export function runDefault(assetsDir = '/assets/socks') {
   const n = Neko.defaultNeko();
+  preloadImages(...imgs.map((i) => assetsDir + '/' + i + '.gif'));
   return run(n, assetsDir);
 }
 
@@ -76,3 +77,45 @@ function addElToDom(): HTMLImageElement {
   body.appendChild(e);
   return e;
 }
+
+function preloadImages(...imgs: string[]) {
+  var images = [];
+  for (var i = 0; i < imgs.length; i++) {
+    images[i] = new Image();
+    images[i].src = imgs[i];
+  }
+}
+
+var imgs = [
+  'alert',
+  'still',
+  'nrun1',
+  'nrun2',
+  'nerun1',
+  'nerun2',
+  'erun1',
+  'erun2',
+  'serun1',
+  'serun2',
+  'srun1',
+  'srun2',
+  'swrun1',
+  'swrun2',
+  'wrun1',
+  'wrun2',
+  'nwrun1',
+  'nwrun2',
+  'yawn',
+  'sleep1',
+  'sleep2',
+  'itch1',
+  'itch2',
+  'nscratch1',
+  'nscratch2',
+  'escratch1',
+  'escratch2',
+  'sscratch1',
+  'sscratch2',
+  'wscratch1',
+  'wscratch2',
+];
