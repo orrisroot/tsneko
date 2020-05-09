@@ -118,22 +118,3 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 code stinks
 
 although it shouldn't matter to you if you only want to use it
-
-## 🚧Roadmap
-
-1. <del>implement all states as in [webneko](https://webneko.net/)</del>
-2. Make configuration easier
-   - expose interface
-3. <del>Add browser implementation</del>
-4. <del>Format readme (add gifs and shit)</del>
-5. <del>make api more intuitive</del>
-6. Deploy to js cdn
-7. Preload assets on load
-8. Bundle all images
-9. commonjs modules
-10. publish to npm
-    - setup package.json
-11. <del>Add documentation</del>
-    - add tests to cover code
-12. Get rid of all todos
-13. Populate keywords
