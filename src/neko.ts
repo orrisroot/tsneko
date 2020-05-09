@@ -176,6 +176,7 @@ export class Neko implements NekoInterface {
   };
 
   updateSleep(x: number, y: number) {
+    this.checkState('sleep');
     // reset ticks
     if (!this.cursorClose(x, y)) {
       this.state.name = 'alert';
@@ -189,6 +190,7 @@ export class Neko implements NekoInterface {
   }
 
   updateYawn(x: number, y: number) {
+    this.checkState('yawn');
     // reset ticks
     if (!this.cursorClose(x, y)) {
       this.state.name = 'alert';
@@ -207,6 +209,7 @@ export class Neko implements NekoInterface {
   }
 
   updateScratch(x: number, y: number) {
+    this.checkState('scratch');
     if (!this.cursorClose(x, y)) {
       this.state.name = 'alert';
       this.state.tick = null;
@@ -231,6 +234,7 @@ export class Neko implements NekoInterface {
   }
 
   updateStill(x: number, y: number) {
+    this.checkState('still');
     if (!this.cursorClose(x, y)) {
       this.state.name = 'alert';
       this.state.tick = null;
@@ -262,6 +266,7 @@ export class Neko implements NekoInterface {
   }
 
   updateItch(x: number, y: number) {
+    this.checkState('itch');
     if (!this.cursorClose(x, y)) {
       this.state.name = 'alert';
       this.state.tick = null;
@@ -284,6 +289,7 @@ export class Neko implements NekoInterface {
   }
 
   updateAlert(x: number, y: number) {
+    this.checkState('alert');
     if (this.cursorClose(x, y)) {
       this.state.name = 'still';
       this.state.tick = null;
@@ -298,6 +304,7 @@ export class Neko implements NekoInterface {
   }
 
   updateRun(x: number, y: number) {
+    this.checkState('run');
     if (this.cursorClose(x, y)) {
       this.state.name = 'still';
       this.state.tick = null;
@@ -352,6 +359,12 @@ export class Neko implements NekoInterface {
 
       default:
         throw Error(`error in finding path direction ${diag} ${phi}`);
+    }
+  }
+
+  private checkState(name: string) {
+    if (name != this.state.name) {
+      throw Error(`expected state: ${name}, got: ${this.state.name}`);
     }
   }
 }

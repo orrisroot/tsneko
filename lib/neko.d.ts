@@ -102,4 +102,5 @@ export declare class Neko implements NekoInterface {
     makeStep(x: number, y: number): void;
     cursorClose(x: number, y: number): boolean;
     chooseRunDirection(x: number, y: number): string;
+    private checkState;
 }
