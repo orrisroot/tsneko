@@ -33,7 +33,7 @@ Navigate to http://127.0.0.1:8080 or http://localhost:8080 to see a live demo
 If you simply want to add it to your 🕸️webpage🕸️:
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/tsneko@0.1.1/_bundle/tsneko.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tsneko@1.0.1/_bundle/tsneko.js"></script>
 <!-- then -->
 <script>
   let clean = tsneko.runWebDefault();
