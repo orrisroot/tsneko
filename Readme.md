@@ -15,6 +15,15 @@ Idea and assets stolen from [webneko.net](https://webneko.net/)
 - Yawn ![yawn](https://i.imgur.com/HStNSdN.gif)
 - Sleep ![sleep](https://i.imgur.com/oFRAKC4.gif)
 
+## Styles
+
+![rainbow](https://i.imgur.com/g3ksW5N.gif)
+![black](https://i.imgur.com/A59m7lt.gif)
+![valentine](https://i.imgur.com/SrDFGOL.gif)
+![fancy](https://i.imgur.com/UyA8QHC.gif)
+
+You can find different neko styles in `example/assets/` directory.
+
 ## 🚀Example
 
 You can run a demo locally:
@@ -37,6 +46,11 @@ If you simply want to add it to your 🕸️webpage🕸️:
 <!-- then -->
 <script>
   let clean = tsneko.runWebDefault();
+  // optionally you can specify assets directory
+  // let clean = tsneko.runWebDefault('myServerDirectory');
+  // The directory should contain state images for neko
+  // i.e. myServerDirectory/still.gif, myServerDirectory/itch1.gif, etc.
+  // See example styles in 'example/assets'
 
   // some time later
   // call clean() to remove it from the document

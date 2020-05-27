@@ -10,17 +10,17 @@ import * as Neko from './index';
 /**
  * Runs neko on the document
  *
- * @param {string} assetsDir
+ * @param {string} imagesDir
  * Directory with assets used for neko <br>
  * Images should be in _assetsDir/"img_name".gif_ format. See example directory
  *
  * @export
  * @returns used to remove neko from the document
  */
-export function runDefault(assetsDir = '/assets/socks') {
+export function runDefault(imagesDir = '/assets/socks') {
   const n = Neko.defaultNeko();
-  preloadImages(...imgs.map((i) => assetsDir + '/' + i + '.gif'));
-  return run(n, assetsDir);
+  preloadImages(...imgs.map((i) => imagesDir + '/' + i + '.gif'));
+  return run(n, imagesDir);
 }
 
 /**
@@ -30,12 +30,12 @@ export function runDefault(assetsDir = '/assets/socks') {
  * @param {Neko.NekoInterface} n
  * A neko that satisfies the {@link NekoInterface}<br>
  * Most users would want to use the default implementation by supplying {@link defaultNeko}
- * @param {string} assetsDir
+ * @param {string} imagesDir
  * Directory with assets used for neko <br>
  * Images should be in _assetsDir/"img_name".gif_ format. See example directory
  * @returns used to remove neko from the document
  */
-export function run(n: Neko.NekoInterface, assetsDir: string) {
+export function run(n: Neko.NekoInterface, imagesDir: string) {
   let cx = 0;
   let cy = 0;
   document.onmousemove = (ev) => {
@@ -47,7 +47,7 @@ export function run(n: Neko.NekoInterface, assetsDir: string) {
 
   const tick = () => {
     n.update(cx, cy);
-    draw(e, n, assetsDir);
+    draw(e, n, imagesDir);
   };
 
   const handle = setInterval(tick, 300);
@@ -57,10 +57,10 @@ export function run(n: Neko.NekoInterface, assetsDir: string) {
   };
 }
 
-function draw(e: HTMLImageElement, n: Neko.NekoInterface, assetsDir: string) {
+function draw(e: HTMLImageElement, n: Neko.NekoInterface, imagesDir: string) {
   e.style.top = n.state.y + 'px';
   e.style.left = n.state.x + 'px';
-  e.src = assetsDir + '/' + n.img + '.gif';
+  e.src = imagesDir + '/' + n.img + '.gif';
 }
 
 // returns id
@@ -86,7 +86,7 @@ function preloadImages(...imgs: string[]) {
   }
 }
 
-var imgs = [
+let imgs = [
   'alert',
   'still',
   'nrun1',

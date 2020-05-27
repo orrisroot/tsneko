@@ -1,6 +1,6 @@
 {
   "name": "tsneko",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Webneko written in typescript | A cat that chases the cursor on your screen",
   "main": "lib/index.js",
   "scripts": {

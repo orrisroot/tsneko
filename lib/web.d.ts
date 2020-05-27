@@ -8,14 +8,14 @@ import * as Neko from './index';
 /**
  * Runs neko on the document
  *
- * @param {string} assetsDir
+ * @param {string} imagesDir
  * Directory with assets used for neko <br>
  * Images should be in _assetsDir/"img_name".gif_ format. See example directory
  *
  * @export
  * @returns used to remove neko from the document
  */
-export declare function runDefault(assetsDir?: string): () => void;
+export declare function runDefault(imagesDir?: string): () => void;
 /**
  * Runs neko on the document
  *
@@ -23,9 +23,9 @@ export declare function runDefault(assetsDir?: string): () => void;
  * @param {Neko.NekoInterface} n
  * A neko that satisfies the {@link NekoInterface}<br>
  * Most users would want to use the default implementation by supplying {@link defaultNeko}
- * @param {string} assetsDir
+ * @param {string} imagesDir
  * Directory with assets used for neko <br>
  * Images should be in _assetsDir/"img_name".gif_ format. See example directory
  * @returns used to remove neko from the document
  */
-export declare function run(n: Neko.NekoInterface, assetsDir: string): () => void;
+export declare function run(n: Neko.NekoInterface, imagesDir: string): () => void;
