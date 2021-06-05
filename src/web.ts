@@ -38,10 +38,22 @@ export function runDefault(imagesDir = '/assets/socks') {
 export function run(n: Neko.NekoInterface, imagesDir: string) {
   let cx = 0;
   let cy = 0;
-  document.onmousemove = (ev) => {
-    cx = ev.x;
-    cy = ev.y;
+  let csx = 0;
+  let csy = 0;
+
+  document.onmousemove = (ev: MouseEvent) => {
+    cx = ev.pageX;
+    cy = ev.pageY;
   };
+
+  window.onscroll = () => {
+    const sx =  window.scrollX;
+    const sy =  window.scrollY;
+    cx += sx - csx;
+    csx = sx;
+    cy += sy - csy;
+    csy = sy;
+  }
 
   const e = addElToDom();
 
