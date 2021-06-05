@@ -4,13 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>kappa123</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js"></script>
     <script src="tsneko.js"></script>
   </head>
   <body>
     <noscript>enable javascript to run the neko</noscript>
   </body>
   <script>
-    let clean = tsneko.runWebDefault();
+    function randomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+    var nekoTypes = [
+      'ace', 'air', 'black', 'blue', 'calico', 'colourful', 'dave', 'earth',
+      'fancy', 'fire', 'ghetto', 'ghost', 'gray', 'holiday', 'jess', 'kina',
+      'kuramecha', 'lucky', 'lucy', 'marmalade', 'mermaid', 'mike', 'moka',
+      'neon', 'orange', 'peach', 'pink', 'rainbow', 'robot', 'rose', 'royal',
+      'silver', 'silversky', 'socks', 'spirit', 'spooky', 'usa', 'valentine',
+      'water', 'white'
+    ];
+    var nekoType = nekoTypes[randomInt(0, nekoTypes.length - 1)];
+    var clean = tsneko.runWebDefault('./assets/' + nekoType);
 
     // some time later
     // call clean() to remove it from the document
