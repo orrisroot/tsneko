@@ -43,7 +43,7 @@ export function run(n: Neko.NekoInterface, imagesDir: string) {
     cy = ev.y;
   };
 
-  let e = addElToDom();
+  const e = addElToDom();
 
   const tick = () => {
     n.update(cx, cy);
@@ -78,14 +78,14 @@ function addElToDom(): HTMLImageElement {
 }
 
 function preloadImages(...imgs: string[]) {
-  var images = [];
-  for (var i = 0; i < imgs.length; i++) {
+  const images = [];
+  for (let i = 0; i < imgs.length; i++) {
     images[i] = new Image();
     images[i].src = imgs[i];
   }
 }
 
-let imgs = [
+const imgs = [
   'alert',
   'still',
   'nrun1',
