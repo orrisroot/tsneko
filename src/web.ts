@@ -66,8 +66,7 @@ function draw(e: HTMLImageElement, n: Neko.NekoInterface, imagesDir: string) {
 // returns id
 function addElToDom(): HTMLImageElement {
   const e = document.createElement('img');
-  e.src =
-    'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpbs.twimg.com%2Fmedia%2FB8W6wUPCYAEmWjy.png%3Alarge&f=1&nofb=1';
+  e.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==';
   const s = e.style;
   s.position = 'absolute';
   s.top = '0px';
