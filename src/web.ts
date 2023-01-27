@@ -40,22 +40,34 @@ export function run(n: Neko.NekoInterface, imagesDir: string) {
   let cy = 0;
   let csx = 0;
   let csy = 0;
+  let stay = false;
 
-  document.addEventListener('mousemove', (ev: MouseEvent) => {
-    cx = ev.pageX;
-    cy = ev.pageY;
-  });
+  const handleMouseMove = (ev: MouseEvent) => {
+    if (!stay) {
+      cx = ev.pageX;
+      cy = ev.pageY;
+    }
+  };
+  document.addEventListener('mousemove', handleMouseMove);
 
-  window.addEventListener('scroll', () => {
-    const sx =  window.scrollX;
-    const sy =  window.scrollY;
-    cx += sx - csx;
-    csx = sx;
-    cy += sy - csy;
-    csy = sy;
-  });
+  const handleScroll = () => {
+    if (!stay) {
+      const sx =  window.scrollX;
+      const sy =  window.scrollY;
+      cx += sx - csx;
+      csx = sx;
+      cy += sy - csy;
+      csy = sy;
+    }
+  };
+  window.addEventListener('scroll', handleScroll);
 
   const e = addElToDom();
+
+  const handleClick = () => {
+    stay = !stay;
+  }
+  e.addEventListener('click', handleClick);
 
   const tick = () => {
     n.update(cx, cy);
@@ -65,6 +77,9 @@ export function run(n: Neko.NekoInterface, imagesDir: string) {
   const handle = setInterval(tick, 300);
   return () => {
     clearInterval(handle);
+    document.removeEventListener('mousemove', handleMouseMove);
+    window.removeEventListener('scroll', handleScroll);
+    e.removeEventListener('click', handleClick);
     e.remove();
   };
 }
