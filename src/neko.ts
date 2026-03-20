@@ -7,7 +7,7 @@
 
 /**
  * Represents the interface for configs<br>
- * Defines the behaviour of neko
+ * Defines the behavior of neko
  *
  * @export
  * @interface NekoConfig
@@ -45,8 +45,7 @@ export interface NekoConfig {
 /**
  * @internal
  */
-const randInt = (min: number, max: number) =>
-  Math.floor(Math.random() * (max - min + 1)) + min;
+const randInt = (min: number, max: number) => Math.floor(Math.random() * (max - min + 1)) + min;
 
 /**
  * The default config for {@link Neko}
@@ -58,30 +57,24 @@ export const defaultConfig: NekoConfig = {
   speed: 10,
   radius: 10,
   ticksBeforeItch: () => {
-    let min = 7;
-    let max = 14;
+    const min = 7;
+    const max = 14;
     return randInt(min, max);
   },
   ticksBeforeScratch: () => {
-    let min = 7;
-    let max = 14;
+    const min = 7;
+    const max = 14;
     return randInt(min, max);
   },
   ticksBeforeYawn: () => {
-    let min = 20;
-    let max = 40;
+    const min = 20;
+    const max = 40;
     return randInt(min, max);
   },
   scratchDirection: () => {
-    const directions = {
-      1: 's',
-      2: 'w',
-      3: 'e',
-      4: 'n',
-    };
-    const rnd = Math.floor(Math.random() * (5 - 1)) + 1;
-    // @ts-ignore
-    return directions[rnd];
+    const directions = ['s', 'w', 'e', 'n'];
+    const rnd = Math.floor(Math.random() * directions.length);
+    return directions[rnd] as 's' | 'w' | 'e' | 'n';
   },
 };
 
@@ -125,7 +118,7 @@ export class Neko implements NekoInterface {
     x: number;
     y: number;
     tick?: number;
-    direction?: string;
+    direction?: 'w' | 'e' | 's' | 'n' | 'nw' | 'ne' | 'sw' | 'se';
     ticksBeforeItch: number;
     framesItch?: number;
     ticksBeforeScratch: number;
@@ -158,19 +151,19 @@ export class Neko implements NekoInterface {
 
   // updates the state
   update = (x: number, y: number) => {
-    if (this.state.name == 'still') {
+    if (this.state.name === 'still') {
       this.updateStill(x, y);
-    } else if (this.state.name == 'itch') {
+    } else if (this.state.name === 'itch') {
       this.updateItch(x, y);
-    } else if (this.state.name == 'alert') {
+    } else if (this.state.name === 'alert') {
       this.updateAlert(x, y);
-    } else if (this.state.name == 'run') {
+    } else if (this.state.name === 'run') {
       this.updateRun(x, y);
-    } else if (this.state.name == 'scratch') {
+    } else if (this.state.name === 'scratch') {
       this.updateScratch(x, y);
-    } else if (this.state.name == 'yawn') {
+    } else if (this.state.name === 'yawn') {
       this.updateYawn(x, y);
-    } else if (this.state.name == 'sleep') {
+    } else if (this.state.name === 'sleep') {
       this.updateSleep(x, y);
     }
   };
@@ -181,6 +174,7 @@ export class Neko implements NekoInterface {
     if (!this.cursorClose(x, y)) {
       this.state.name = 'alert';
       this.state.tick = null;
+      this.state.direction = null;
       this.state.ticksBeforeItch = this.config.ticksBeforeItch();
       this.state.ticksBeforeScratch = this.config.ticksBeforeScratch();
       return;
@@ -198,7 +192,7 @@ export class Neko implements NekoInterface {
       return;
     }
 
-    if (this.state.framesYawn - 1 == 0) {
+    if (this.state.framesYawn - 1 === 0) {
       this.state.name = 'sleep';
       this.state.tick = 1;
       this.state.framesYawn = null;
@@ -220,7 +214,7 @@ export class Neko implements NekoInterface {
     }
 
     // done scratching
-    if (this.state.framesScratch - 1 == 0) {
+    if (this.state.framesScratch - 1 === 0) {
       this.state.name = 'still';
       this.state.tick = null;
       this.state.framesScratch = null;
@@ -276,7 +270,7 @@ export class Neko implements NekoInterface {
     }
 
     // done itching
-    if (this.state.framesItch - 1 == 0) {
+    if (this.state.framesItch - 1 === 0) {
       this.state.name = 'still';
       this.state.tick = null;
       this.state.framesItch = null;
@@ -322,7 +316,7 @@ export class Neko implements NekoInterface {
     // x=0 y=-10
     const dx = x - this.state.x;
     const dy = y - this.state.y;
-    let phi = Math.atan2(dy, dx);
+    const phi = Math.atan2(dy, dx);
 
     this.state.x += this.config.speed * Math.cos(phi);
     this.state.y += this.config.speed * Math.sin(phi);
@@ -332,11 +326,11 @@ export class Neko implements NekoInterface {
     return Math.hypot(this.state.x - x, this.state.y - y) < this.config.radius;
   }
 
-  chooseRunDirection(x: number, y: number): string {
+  chooseRunDirection(x: number, y: number): 'e' | 'ne' | 'n' | 'nw' | 'w' | 'sw' | 's' | 'se' {
     const dx = x - this.state.x;
     const dy = y - this.state.y;
     const diag = Math.hypot(dx, dy);
-    let phi = calcAngleDegrees(dx, dy);
+    const phi = calcAngleDegrees(dx, dy);
 
     // todo use math.pi
     switch (true) {
@@ -363,7 +357,7 @@ export class Neko implements NekoInterface {
   }
 
   private checkState(name: string) {
-    if (name != this.state.name) {
+    if (name !== this.state.name) {
       throw Error(`expected state: ${name}, got: ${this.state.name}`);
     }
   }
@@ -372,6 +366,6 @@ export class Neko implements NekoInterface {
 /**
  * @internal
  */
-function calcAngleDegrees(x: any, y: any): number {
+function calcAngleDegrees(x: number, y: number): number {
   return (Math.atan2(y, x) * 180) / Math.PI;
 }

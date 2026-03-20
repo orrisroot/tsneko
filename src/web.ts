@@ -15,11 +15,11 @@ import * as Neko from './index';
  * Images should be in _assetsDir/"img_name".gif_ format. See example directory
  *
  * @export
- * @returns used to remove neko from the document
+ * @returns function used to remove neko from the document
  */
-export function runDefault(imagesDir = '/assets/socks') {
+export function runDefault(imagesDir = '/assets/socks'): () => void {
   const n = Neko.defaultNeko();
-  preloadImages(...imgs.map((i) => imagesDir + '/' + i + '.gif'));
+  preloadImages(...imgs.map((i) => `${imagesDir}/${i}.gif`));
   return run(n, imagesDir);
 }
 
@@ -33,9 +33,9 @@ export function runDefault(imagesDir = '/assets/socks') {
  * @param {string} imagesDir
  * Directory with assets used for neko <br>
  * Images should be in _assetsDir/"img_name".gif_ format. See example directory
- * @returns used to remove neko from the document
+ * @returns function used to remove neko from the document
  */
-export function run(n: Neko.NekoInterface, imagesDir: string) {
+export function run(n: Neko.NekoInterface, imagesDir: string): () => void {
   let cx = 0;
   let cy = 0;
   let csx = 0;
@@ -52,8 +52,8 @@ export function run(n: Neko.NekoInterface, imagesDir: string) {
 
   const handleScroll = () => {
     if (!stay) {
-      const sx =  window.scrollX;
-      const sy =  window.scrollY;
+      const sx = window.scrollX;
+      const sy = window.scrollY;
       cx += sx - csx;
       csx = sx;
       cy += sy - csy;
@@ -66,8 +66,39 @@ export function run(n: Neko.NekoInterface, imagesDir: string) {
 
   const handleClick = () => {
     stay = !stay;
-  }
+  };
   e.addEventListener('click', handleClick);
+
+  // --- Add drag feature ---
+  let dragging = false;
+  let dragOffsetX = 0;
+  let dragOffsetY = 0;
+
+  const handleMouseDown = (ev: MouseEvent) => {
+    // Start dragging when mousedown on cat image
+    dragging = true;
+    // Save the offset between image top-left and mouse position
+    dragOffsetX = ev.pageX - n.state.x;
+    dragOffsetY = ev.pageY - n.state.y;
+    ev.preventDefault();
+  };
+  const handleMouseUp = () => {
+    dragging = false;
+  };
+  const handleDragMove = (ev: MouseEvent) => {
+    if (dragging) {
+      // Update cat position while dragging
+      n.state.x = ev.pageX - dragOffsetX;
+      n.state.y = ev.pageY - dragOffsetY;
+      // Update drawing
+      draw(e, n, imagesDir);
+      // Stop following cursor after drag
+      stay = true;
+    }
+  };
+  e.addEventListener('mousedown', handleMouseDown);
+  document.addEventListener('mousemove', handleDragMove);
+  document.addEventListener('mouseup', handleMouseUp);
 
   const tick = () => {
     n.update(cx, cy);
@@ -80,14 +111,17 @@ export function run(n: Neko.NekoInterface, imagesDir: string) {
     document.removeEventListener('mousemove', handleMouseMove);
     window.removeEventListener('scroll', handleScroll);
     e.removeEventListener('click', handleClick);
+    e.removeEventListener('mousedown', handleMouseDown);
+    document.removeEventListener('mousemove', handleDragMove);
+    document.removeEventListener('mouseup', handleMouseUp);
     e.remove();
   };
 }
 
 function draw(e: HTMLImageElement, n: Neko.NekoInterface, imagesDir: string) {
-  e.style.top = n.state.y + 'px';
-  e.style.left = n.state.x + 'px';
-  e.src = imagesDir + '/' + n.img + '.gif';
+  e.style.top = `${n.state.y}px`;
+  e.style.left = `${n.state.x}px`;
+  e.src = `${imagesDir}/${n.img}.gif`;
 }
 
 // returns id

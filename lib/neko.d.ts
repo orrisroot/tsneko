@@ -6,7 +6,7 @@
  */
 /**
  * Represents the interface for configs<br>
- * Defines the behaviour of neko
+ * Defines the behavior of neko
  *
  * @export
  * @interface NekoConfig
@@ -80,7 +80,7 @@ export declare class Neko implements NekoInterface {
         x: number;
         y: number;
         tick?: number;
-        direction?: string;
+        direction?: 'w' | 'e' | 's' | 'n' | 'nw' | 'ne' | 'sw' | 'se';
         ticksBeforeItch: number;
         framesItch?: number;
         ticksBeforeScratch: number;
@@ -101,6 +101,6 @@ export declare class Neko implements NekoInterface {
     updateRun(x: number, y: number): void;
     makeStep(x: number, y: number): void;
     cursorClose(x: number, y: number): boolean;
-    chooseRunDirection(x: number, y: number): string;
+    chooseRunDirection(x: number, y: number): 'e' | 'ne' | 'n' | 'nw' | 'w' | 'sw' | 's' | 'se';
     private checkState;
 }

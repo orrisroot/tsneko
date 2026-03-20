@@ -1,21 +1,15 @@
 import * as wn from '../src/index';
 
-let testConfig: wn.NekoConfig = {
+const testConfig: wn.NekoConfig = {
   speed: 2,
   radius: 1,
   ticksBeforeItch: () => 5,
   ticksBeforeScratch: () => 5,
   ticksBeforeYawn: () => 10,
   scratchDirection: () => {
-    const directions = {
-      1: 's',
-      2: 'w',
-      3: 'e',
-      4: 'n',
-    };
-    const rnd = Math.floor(Math.random() * (5 - 1)) + 1;
-    // @ts-ignore
-    return directions[rnd];
+    const directions = ['s', 'w', 'e', 'n'];
+    const rnd = Math.floor(Math.random() * directions.length);
+    return directions[rnd] as 's' | 'w' | 'e' | 'n';
   },
 };
 
@@ -78,11 +72,11 @@ it.each`
 
   // alert -> run1
   n.update(xy.x, xy.y);
-  expect(n.img).toBe(dir + '1');
+  expect(n.img).toBe(`${dir}1`);
 
   // run1 -> run2
   n.update(xy.x, xy.y);
-  expect(n.img).toBe(dir + '2');
+  expect(n.img).toBe(`${dir}2`);
 
   for (let i = 0; i < 10; i++) {
     n.update(xy.x, xy.y);
@@ -137,7 +131,7 @@ it.each`
   ${'w'} | ${'wscratch'}
   ${'e'} | ${'escratch'}
   ${'n'} | ${'nscratch'}
-`('state scrath $dir', ({ dir, img }) => {
+`('state scratch $dir', ({ dir, img }) => {
   n.state.ticksBeforeItch = -1;
   n.state.ticksBeforeYawn = 1000;
 
@@ -159,13 +153,13 @@ it.each`
   expect(n.state.name).toBe('still');
 
   n.update(0, 0);
-  expect(n.img).toBe(img + '1');
+  expect(n.img).toBe(`${img}1`);
   n.update(0, 0);
-  expect(n.img).toBe(img + '2');
+  expect(n.img).toBe(`${img}2`);
   n.update(0, 0);
-  expect(n.img).toBe(img + '1');
+  expect(n.img).toBe(`${img}1`);
   n.update(0, 0);
-  expect(n.img).toBe(img + '2');
+  expect(n.img).toBe(`${img}2`);
 
   // interrupt scratch
   n.update(0, 0);
@@ -176,7 +170,7 @@ it.each`
   n.update(0, 0);
   expect(n.state.name).toBe('still');
   n.update(0, 0);
-  expect(n.img).toBe(img + '1');
+  expect(n.img).toBe(`${img}1`);
   n.update(10, 10);
   expect(n.img).toBe('alert');
 });

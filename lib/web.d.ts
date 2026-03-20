@@ -13,7 +13,7 @@ import * as Neko from './index';
  * Images should be in _assetsDir/"img_name".gif_ format. See example directory
  *
  * @export
- * @returns used to remove neko from the document
+ * @returns function used to remove neko from the document
  */
 export declare function runDefault(imagesDir?: string): () => void;
 /**
@@ -26,6 +26,6 @@ export declare function runDefault(imagesDir?: string): () => void;
  * @param {string} imagesDir
  * Directory with assets used for neko <br>
  * Images should be in _assetsDir/"img_name".gif_ format. See example directory
- * @returns used to remove neko from the document
+ * @returns function used to remove neko from the document
  */
 export declare function run(n: Neko.NekoInterface, imagesDir: string): () => void;

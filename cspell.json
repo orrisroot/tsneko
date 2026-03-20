@@ -1,0 +1,30 @@
+{
+  "version": "0.2",
+  "language": "en, en-gb, en-us",
+  "ignorePaths": [],
+  "dictionaryDefinitions": [],
+  "dictionaries": [],
+  "words": [
+    "erun",
+    "escratch",
+    "kuramecha",
+    "moka",
+    "neko",
+    "nerun",
+    "nrun",
+    "nscratch",
+    "nwrun",
+    "serun",
+    "silversky",
+    "srun",
+    "sscratch",
+    "swrun",
+    "tsneko",
+    "webneko",
+    "wrun",
+    "wscratch",
+    "yoink"
+  ],
+  "ignoreWords": [],
+  "import": []
+}

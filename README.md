@@ -45,9 +45,9 @@ If you simply want to add it to your 🕸️webpage🕸️:
 <script src="https://cdn.jsdelivr.net/npm/tsneko@1.0.1/_bundle/tsneko.js"></script>
 <!-- then -->
 <script>
-  let clean = tsneko.runWebDefault();
+  const clean = tsneko.runWebDefault();
   // optionally you can specify assets directory
-  // let clean = tsneko.runWebDefault('myServerDirectory');
+  // const clean = tsneko.runWebDefault('myServerDirectory');
   // The directory should contain state images for neko
   // i.e. myServerDirectory/still.gif, myServerDirectory/itch1.gif, etc.
   // See example styles in 'example/assets'
@@ -73,13 +73,13 @@ npm install tsneko
 CommonJS
 
 ```javascript
-const tsneko = require('tsneko');
+const tsneko = require("tsneko");
 ```
 
 ES6 modules
 
 ```javascript
-import * as tsneko from 'tsneko';
+import * as tsneko from "tsneko";
 ```
 
 ### Use:
@@ -90,7 +90,7 @@ let neko = tsneko.defaultNeko();
 
 neko.update(cursorX, cursorY); // to update the state
 
-neko.state.x, neko.state.y; // to get neko position
+(neko.state.x, neko.state.y); // to get neko position
 neko.img; // to get the image
 
 // You can actually try to embed it into an electron app
@@ -121,7 +121,7 @@ Then navigate to localhost:3228 in your web browser
 
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-**!** I would be glad if some of you javascript tryhards could kindly setup webpack or npm scripts
+**!** I would be glad if some of you javascript try hards could kindly setup webpack or npm scripts
 
 ## License
 
